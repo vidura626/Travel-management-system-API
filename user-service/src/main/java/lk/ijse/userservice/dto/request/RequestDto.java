@@ -1,5 +1,6 @@
 package lk.ijse.userservice.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lk.ijse.userservice.entity.embedded.NICorPassport;
 import lk.ijse.userservice.util.constants.Gender;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 
@@ -20,7 +22,7 @@ public class RequestDto {
     private String name;
     private Gender gender;
     private Date dob;
-    private byte[] proPic;
+    private MultipartFile proPic;
     private String remarks;
     private NICorPassport nicOrPassport;
     private Date regDate;

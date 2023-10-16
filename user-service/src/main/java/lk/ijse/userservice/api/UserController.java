@@ -18,24 +18,26 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(path = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDto registerUser(@RequestBody RequestDto requestDto) {
+    @PostMapping(path = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseDto registerUser(@RequestBody RequestDto srequestDto) {
 
 //        TODO: Validation
 
 //        TODO: Save to DB
 
 //        TODO: Return
+        return null;
     }
 
-    @PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDto registerUser(@RequestBody RequestDto requestDto) {
+    @PutMapping(path = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseDto updateUser(@RequestBody RequestDto requestDto) {
 
 //        TODO: Validation
 
 //        TODO: Save to DB
 
 //        TODO: Return
+        return null;
     }
 
     @PatchMapping(path = "/change/pwd", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,7 +70,7 @@ public class UserController {
         return null;
     }
 
-    @GetMapping("/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseDto login(@RequestBody RequestDto requestDto) {
 //        TODO: Validation
 
@@ -78,7 +80,7 @@ public class UserController {
         return null;
     }
 
-    @GetMapping("/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseDto getAllUsers() {
 //        TODO: Get All users
 
@@ -86,4 +88,12 @@ public class UserController {
         return null;
     }
 
+    @DeleteMapping(path = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseDto deleteUser(String username) {
+//        TODO: Delete user
+
+//        TODO: Return
+
+        return null;
+    }
 }
