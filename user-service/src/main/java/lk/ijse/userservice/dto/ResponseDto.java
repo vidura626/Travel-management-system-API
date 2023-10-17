@@ -1,10 +1,6 @@
-package lk.ijse.userservice.dto.request;
+package lk.ijse.userservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lk.ijse.userservice.entity.embedded.NICorPassport;
-import lk.ijse.userservice.util.constants.Gender;
-import lk.ijse.userservice.util.constants.Role;
+import lk.ijse.userservice.dto.embedded.NICorPassportDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,20 +13,18 @@ import java.sql.Date;
 @NoArgsConstructor
 @Data
 @Builder
-public class RequestDto {
+public class ResponseDto {
     private long userId;
     private String name;
-    private Gender gender;
+    private String gender;
     private Date dob;
     private MultipartFile proPic;
     private String remarks;
-    private NICorPassport nicOrPassport;
+    private NICorPassportDto niCorPassportDto;
     private Date regDate;
     private String username;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
     private String email;
     private String address;
     private String contact;
-    private Role role;
+    private String role;
 }

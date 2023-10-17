@@ -2,12 +2,12 @@ package lk.ijse.userservice.entity;
 
 import lk.ijse.userservice.entity.embedded.NICorPassport;
 import lk.ijse.userservice.util.constants.Gender;
-import lk.ijse.userservice.util.constants.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.sql.Date;
@@ -33,5 +33,4 @@ public class User {
     private String address;
     private String contact;
     private String role;
-
 }

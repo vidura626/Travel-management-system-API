@@ -3,6 +3,7 @@ package lk.ijse.userservice.entity.embedded;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
@@ -10,6 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class NICorPassport {
     private String id;
-    private MultipartFile frontImg;
-    private MultipartFile backImg;
+    private byte[] frontImg;
+    private byte[] backImg;
 }

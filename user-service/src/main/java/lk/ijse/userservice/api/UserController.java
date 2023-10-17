@@ -1,9 +1,7 @@
 package lk.ijse.userservice.api;
 
-import lk.ijse.userservice.dto.request.RequestDto;
-import lk.ijse.userservice.dto.response.ResponseDto;
-import lk.ijse.userservice.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lk.ijse.userservice.dto.RequestDto;
+import lk.ijse.userservice.dto.ResponseDto;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,25 +9,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/user")
 public class UserController {
 
-    private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @PostMapping(path = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDto registerUser(@RequestBody RequestDto srequestDto) {
+    @PostMapping(path = "/register",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseDto registerUser(@RequestBody RequestDto requestDto) {
 
 //        TODO: Validation
-
 //        TODO: Save to DB
-
 //        TODO: Return
         return null;
     }
 
-    @PutMapping(path = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/update",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseDto updateUser(@RequestBody RequestDto requestDto) {
 
 //        TODO: Validation
@@ -40,7 +34,8 @@ public class UserController {
         return null;
     }
 
-    @PatchMapping(path = "/change/pwd", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(path = "/change/pwd",
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseDto changePassword(String username, String password) {
 //        TODO: Validation
 

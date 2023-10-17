@@ -1,6 +1,7 @@
 package lk.ijse.userservice.util.validation;
 
-import lk.ijse.userservice.dto.request.RequestDto;
+
+import lk.ijse.userservice.dto.RequestDto;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
