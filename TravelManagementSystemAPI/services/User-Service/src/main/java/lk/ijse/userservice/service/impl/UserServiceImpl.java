@@ -28,14 +28,14 @@ public class UserServiceImpl implements UserService {
     public void registerUser(RequestDto userDto) {
         if (findUserByUsername(userDto.getUsername()) != null)
             throw new AlreadyExistsException("Username already exists");
-        userRepository.save(requestMapper.userDtoToUser(userDto));
+//        userRepository.save(requestMapper.userDtoToUser(userDto));
     }
 
     @Override
     public void updateUser(RequestDto user) {
         if (findUserByUsername(user.getUsername()) == null)
             throw new NotFoundException("User not found");
-        userRepository.save(requestMapper.userDtoToUser(user));
+//        userRepository.save(requestMapper.userDtoToUser(user));
     }
 
     @Override
@@ -48,12 +48,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseDto findUserByUsername(String username) {
-        return requestMapper.userToUserDto(userRepository.findUserByUsername(username));
+//        return requestMapper.userToUserDto(userRepository.findUserByUsername(username));
+        return null;
     }
 
     @Override
     public ResponseDto findUserByEmail(String email) {
-        return requestMapper.userToUserDto(userRepository.findUserByEmail(email));
+//        return requestMapper.userToUserDto(userRepository.findUserByEmail(email));
+        return null;
     }
 
     @Override
@@ -66,6 +68,7 @@ public class UserServiceImpl implements UserService {
     public List<ResponseDto> findUserByRole(Role role) {
         return null;
 //        return userMapper.userListToUserDtoList(userRepository.findUsersByRole(role));
+
     }
 
     @Override
