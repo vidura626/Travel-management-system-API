@@ -8,7 +8,7 @@ import lk.ijse.userservice.exception.NotFoundException;
 import lk.ijse.userservice.repository.UserRepository;
 import lk.ijse.userservice.service.UserService;
 import lk.ijse.userservice.util.constants.Role;
-import lk.ijse.userservice.util.convertor.RequestMapper;
+import lk.ijse.userservice.util.mappers.RequestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +25,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void registerUser(RequestDto userDto) {
-        if (findUserByUsername(userDto.getUsername()) != null)
+    public void registerUser(RequestDto requestDto) {
+        if (findUserByUsername(requestDto.getUsername()) != null)
             throw new AlreadyExistsException("Username already exists");
-//        userRepository.save(requestMapper.userDtoToUser(userDto));
+        userRepository.save(requestMapper.requestDtoToUser(requestDto));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package lk.ijse.userservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,15 +16,13 @@ import java.sql.Date;
 @Data
 @Builder
 public class RequestDto {
-    @NotNull(message = "Username cannot be null")
-    @Min(value = 1, message = "UserID cannot be less than 1")
     private long userId;
     @NotBlank(message = "Name cannot be blank")
     @Pattern(message = "Name should contain only letters",
             regexp = "^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)$")
     private String name;
-    @Pattern(message = "Gender should be male or female",
-            regexp = "^(male|female)$")
+//    @Pattern(message = "Gender should be male or female",
+//            regexp = "^(male|female)$")
     private String gender;
     @NotNull(message = "Date of Birth cannot be null")
     @Pattern(message = "Date of Birth should be in dd/mm/yyyy format",
