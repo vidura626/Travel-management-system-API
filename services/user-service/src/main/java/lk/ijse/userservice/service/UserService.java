@@ -23,7 +23,7 @@ public interface UserService {
 
     public List<ResponseDto> findUserByRole(Role role);
 
-    public void changePassword(String username, String password);
+    public ResponseDto changePassword(String username, String password);
 
     public void changeEmail(String username, String email);
 

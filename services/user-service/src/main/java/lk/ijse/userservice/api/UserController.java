@@ -26,21 +26,20 @@ public class UserController {
         return ResponseEntity.ok().body(null);
     }
 
-    @PostMapping(path = "/update",
+    @PutMapping(path = "/update",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ResponseDto>  updateUser(@ModelAttribute @Valid RequestDto requestDto) {
+    public ResponseEntity<ResponseDto> updateUser(@ModelAttribute @Valid RequestDto requestDto) {
         userService.updateUser(requestDto);
         return ResponseEntity.ok().body(null);
     }
-    @PatchMapping(path = "/change/pwd",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDto changePassword(String username, String password) {
-//        TODO: Validation
 
-//        TODO: Update DB
-
-//        TODO: Return
-        return null;
+    @PatchMapping(path = "/change/pwd", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDto> changePassword(String username, String password) {
+        if (username == null || password == null) {
+            throw new NullPointerException("Username or password cannot be null");
+        } else {
+            return ResponseEntity.ok().body(userService.changePassword(username, password));
+        }
     }
 
     @PatchMapping(path = "/change/email",

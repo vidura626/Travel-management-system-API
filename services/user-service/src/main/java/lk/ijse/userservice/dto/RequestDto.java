@@ -42,6 +42,7 @@ public class RequestDto {
     @NotNull(message = "Profile Picture cannot be null or blank")
     private MultipartFile backImg;
     private Date regDate;
+    @NotBlank(message = "Username cannot be blank")
     @Pattern(regexp = "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$",
             message = "Username should contain only letters and numbers")
     private String username;
@@ -53,6 +54,7 @@ public class RequestDto {
     @NotBlank(message = "Address cannot be null or blank")
     @Size(min = 5, max = 100, message = "Address should be between 5 and 100 characters")
     private String address;
+    @NotBlank(message = "Contact cannot be blank")
     @Pattern(message = "Contact should contain only numbers",
             regexp = "^(?:7|0|(?:\\+94)|(?:94))[0-9]{9,10}$")
     private String contact;

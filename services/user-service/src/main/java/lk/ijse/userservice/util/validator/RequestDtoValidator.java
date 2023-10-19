@@ -1,17 +1,25 @@
 package lk.ijse.userservice.util.validator;
 
+import jdk.jfr.Name;
 import lk.ijse.userservice.exception.RequestDtoValidationException;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+import org.mapstruct.control.MappingControls;
 import org.springframework.stereotype.Component;
 
 @Component
+@Mapper
 public class RequestDtoValidator {
-    public long validate(long userId) {
+    @Named("userId")
+    public long validate(long userId) throws RequestDtoValidationException {
         if (userId > 0) {
             return userId;
         }
         throw new RequestDtoValidationException("Invalid User Id");
     }
 
+    @Named("password")
     public String validate(String password) {
         if (password == null) {
             return null;
@@ -23,6 +31,7 @@ public class RequestDtoValidator {
         }
     }
 
+    @Named("gender")
     public String validateGender(String gender) {
         if (gender == null) throw new RequestDtoValidationException("Gender is required");
         if (gender.equalsIgnoreCase("male") || gender.equalsIgnoreCase("female")) {

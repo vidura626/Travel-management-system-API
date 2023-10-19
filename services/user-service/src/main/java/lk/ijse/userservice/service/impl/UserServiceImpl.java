@@ -17,11 +17,13 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final RequestMapper requestMapper = RequestMapper.INSTANCE;
+    @Autowired
+    private final RequestMapper requestMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, RequestMapper requestMapper) {
         this.userRepository = userRepository;
+        this.requestMapper = requestMapper;
     }
 
     @Override
@@ -35,9 +37,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long updateUser(RequestDto user) {
-        if (userRepository.findUserByUsername(user.getUsername()) == null) {
+        User userByUsername = userRepository.findUserByUsername(user.getUsername());
+        if (userByUsername == null) {
             throw new NotFoundException("User not found. Username : " + user.getUsername());
         } else {
+            if (user.getPassword() != null) {
+            } else {
+                user.setPassword(userByUsername.getPassword());
+            }
             userRepository.save(requestMapper.requestDtoToUser(user));
             return user.getUserId();
         }
@@ -77,12 +84,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(String username, String password) {
+    public ResponseDto changePassword(String username, String password) {
         User user = userRepository.findUserByUsername(username);
-        if (user == null)
+        if (user == null) {
             throw new NotFoundException("User not found");
-        user.setPassword(password);
-//        userRepository.save(userMapper.userDtoToUser(user));
+        } else {
+            user.setPassword(password);
+            return requestMapper.userToResponseDto(userRepository.save(user));
+        }
     }
 
     @Override

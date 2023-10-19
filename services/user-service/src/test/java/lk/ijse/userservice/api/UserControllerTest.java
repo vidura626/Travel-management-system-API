@@ -1,6 +1,7 @@
 package lk.ijse.userservice.api;
 
-import lk.ijse.userservice.dto.CustomerDto;
+import lk.ijse.userservice.util.mappers.RequestMapper;
+import lk.ijse.userservice.util.validator.RequestDtoValidator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -9,9 +10,9 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -107,11 +108,11 @@ class UserControllerTest {
                 .param("nicOrPassport", "123456789V")
                 .param("password", "johndoe123")
                 .param("email", "johndoe@example.com")
-                .param("address", "123 Main Street")
+                .param("address", "123 Main 04 Street")
                 .param("contact", "0771234567")
                 .param("role", "user")
                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE));
-        perform.andExpect(status().isOk());
+        perform.andExpect(status().isOk()).andDo(print());
     }
 
     @Test

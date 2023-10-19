@@ -1,5 +1,7 @@
 package lk.ijse.userservice.entity;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lk.ijse.userservice.entity.embedded.NICorPassport;
 import lk.ijse.userservice.util.constants.Gender;
 import lombok.AllArgsConstructor;
