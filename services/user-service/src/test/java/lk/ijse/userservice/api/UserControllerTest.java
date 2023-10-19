@@ -1,5 +1,6 @@
 package lk.ijse.userservice.api;
 
+import lk.ijse.userservice.dto.CustomerDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -8,10 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -26,28 +26,9 @@ class UserControllerTest {
         MockMultipartFile proPicFile = new MockMultipartFile("proPic", "test-proPic.jpg", "image/jpeg", "proPicData".getBytes());
         MockMultipartFile frontImgFile = new MockMultipartFile("frontImg", "test-frontImg.jpg", "image/jpeg", "frontImgData".getBytes());
         MockMultipartFile backImgFile = new MockMultipartFile("backImg", "test-backImg.jpg", "image/jpeg", "backImgData".getBytes());
-//        Test
-        /*        MockMultipartFile file = new MockMultipartFile("proPic", "test-file.txt", "text/plain", "Hello, World!".getBytes());
-
-         Create a CustomerDto with test data
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setName("John Doe");
-
-         Perform the request and simulate the file upload
-        MockMvcRequestBuilders.multipart("/api/user/register")
-                .file(file)
-                .param("name", customerDto.getName())
-                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE);
-
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/user/register")
-                .file(file)
-                .file(frontImgFile)
-                .param("name", "Vidura")
-                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
-                .andExpect(status().isOk());*/
 
 //        Save
-        /*ResultActions perform = mockMvc.perform(multipart("/api/user/register")
+        ResultActions perform = mockMvc.perform(multipart("/api/user/register")
                 .file(proPicFile)
                 .file(frontImgFile)
                 .file(backImgFile)
@@ -64,7 +45,7 @@ class UserControllerTest {
                 .param("contact", "0771234567")
                 .param("role", "user")
                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE));
-        perform.andExpect(status().isOk());*/
+        perform.andExpect(status().isOk());
 
 //        Check Conflict
        /* ResultActions perform2 = mockMvc.perform(multipart("/api/user/register")
@@ -119,7 +100,7 @@ class UserControllerTest {
                 .file(backImgFile)
                 .param("userId", "1")
                 .param("username", "johndoe123")
-                .param("name", "John Dsefef")
+                .param("name", "Hee Hee")
                 .param("gender", "male")
                 .param("dob", "1/1/1990")
                 .param("remarks", "Some remarks")

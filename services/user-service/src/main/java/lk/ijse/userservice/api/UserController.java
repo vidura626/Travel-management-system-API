@@ -1,7 +1,6 @@
 package lk.ijse.userservice.api;
 
 import jakarta.validation.Valid;
-import lk.ijse.userservice.dto.CustomerDto;
 import lk.ijse.userservice.dto.RequestDto;
 import lk.ijse.userservice.dto.ResponseDto;
 import lk.ijse.userservice.service.UserService;
@@ -27,13 +26,12 @@ public class UserController {
         return ResponseEntity.ok().body(null);
     }
 
-    @PutMapping(path = "/update",
+    @PostMapping(path = "/update",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ResponseDto> updateUser(@RequestBody @Valid RequestDto requestDto) {
+    public ResponseEntity<ResponseDto>  updateUser(@ModelAttribute @Valid RequestDto requestDto) {
         userService.updateUser(requestDto);
         return ResponseEntity.ok().body(null);
     }
-
     @PatchMapping(path = "/change/pwd",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseDto changePassword(String username, String password) {

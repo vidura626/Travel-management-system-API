@@ -26,24 +26,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(RequestDto requestDto) {
-        if (userRepository.findUserByUsername(requestDto.getUsername()) != null)
-            throw new AlreadyExistsException("Username already exists");
-        userRepository.save(requestMapper.requestDtoToUser(requestDto));
+        if (userRepository.findUserByUsername(requestDto.getUsername()) != null) {
+            throw new AlreadyExistsException("Username already exists. Username : " + requestDto.getUsername());
+        } else {
+            userRepository.save(requestMapper.requestDtoToUser(requestDto));
+        }
     }
 
     @Override
     public Long updateUser(RequestDto user) {
-        if (findUserByUsername(user.getUsername()) == null)
-            throw new NotFoundException("User not found");
-        userRepository.save(requestMapper.requestDtoToUser(user));
-        return user.getUserId();
+        if (userRepository.findUserByUsername(user.getUsername()) == null) {
+            throw new NotFoundException("User not found. Username : " + user.getUsername());
+        } else {
+            userRepository.save(requestMapper.requestDtoToUser(user));
+            return user.getUserId();
+        }
     }
 
     @Override
     public void deleteUser(String username) {
         ResponseDto user = findUserByUsername(username);
         if (user == null)
-            throw new NotFoundException("User not found");
+            throw new NotFoundException("User not found. Username : " + username);
 //        userRepository.delete(userMapper.userDtoToUser(user));
     }
 
