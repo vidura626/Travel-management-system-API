@@ -26,16 +26,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(RequestDto requestDto) {
-        if (findUserByUsername(requestDto.getUsername()) != null)
+        if (userRepository.findUserByUsername(requestDto.getUsername()) != null)
             throw new AlreadyExistsException("Username already exists");
         userRepository.save(requestMapper.requestDtoToUser(requestDto));
     }
 
     @Override
-    public void updateUser(RequestDto user) {
+    public Long updateUser(RequestDto user) {
         if (findUserByUsername(user.getUsername()) == null)
             throw new NotFoundException("User not found");
-//        userRepository.save(requestMapper.userDtoToUser(user));
+        userRepository.save(requestMapper.requestDtoToUser(user));
+        return user.getUserId();
     }
 
     @Override

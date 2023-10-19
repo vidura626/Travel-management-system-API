@@ -3,6 +3,8 @@ package lk.ijse.userservice.util.mappers;
 import lk.ijse.userservice.dto.RequestDto;
 import lk.ijse.userservice.dto.ResponseDto;
 import lk.ijse.userservice.entity.User;
+import lk.ijse.userservice.exception.RequestDtoValidationException;
+import lk.ijse.userservice.util.constants.Gender;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,7 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {
+        RequestDtoValidationException.class,
+        Gender.class
+})
 public interface RequestMapper {
     RequestMapper INSTANCE = Mappers.getMapper(RequestMapper.class);
 
@@ -19,7 +24,9 @@ public interface RequestMapper {
     @Mapping(source = "nicOrPassport", target = "nicOrPassport.id")
     @Mapping(source = "frontImg", target = "nicOrPassport.frontImg")
     @Mapping(source = "backImg", target = "nicOrPassport.backImg")
-    User requestDtoToUser(RequestDto requestDto);
+    @Mapping( target = "gender", expression = "java(lk.ijse.userservice.util.constants.Gender.valueOf(requestDto.getGender().toUpperCase()))")
+    User requestDtoToUser(RequestDto requestDto) throws RequestDtoValidationException;
+
 
     @InheritInverseConfiguration
     ResponseDto requestDtoToUser(User user);
@@ -27,6 +34,7 @@ public interface RequestMapper {
     default byte[] multipartFileToByteArray(MultipartFile file) throws IOException {
         return file.getBytes();
     }
+
     default MultipartFile multipartFileToByteArray(byte[] byteArray) throws IOException {
         return new MultipartFile() {
             @Override

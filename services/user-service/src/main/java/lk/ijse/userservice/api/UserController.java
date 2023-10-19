@@ -1,6 +1,7 @@
 package lk.ijse.userservice.api;
 
 import jakarta.validation.Valid;
+import lk.ijse.userservice.dto.CustomerDto;
 import lk.ijse.userservice.dto.RequestDto;
 import lk.ijse.userservice.dto.ResponseDto;
 import lk.ijse.userservice.service.UserService;
@@ -20,24 +21,17 @@ public class UserController {
     }
 
     @PostMapping(path = "/register",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDto> registerUser(@RequestBody @Valid RequestDto requestDto) {
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseDto> registerUser(@ModelAttribute @Valid RequestDto requestDto) {
         userService.registerUser(requestDto);
-        return null;
+        return ResponseEntity.ok().body(null);
     }
 
     @PutMapping(path = "/update",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDto updateUser(@RequestBody @Valid RequestDto requestDto) {
-
-//        TODO: Validation
-
-//        TODO: Save to DB
-
-//        TODO: Return
-        return null;
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseDto> updateUser(@RequestBody @Valid RequestDto requestDto) {
+        userService.updateUser(requestDto);
+        return ResponseEntity.ok().body(null);
     }
 
     @PatchMapping(path = "/change/pwd",

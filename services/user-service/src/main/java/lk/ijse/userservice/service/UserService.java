@@ -6,11 +6,12 @@ import lk.ijse.userservice.exception.NotFoundException;
 import lk.ijse.userservice.util.constants.Role;
 
 import java.util.List;
+import java.util.Locale;
 
 public interface UserService {
     public void registerUser(RequestDto user);
 
-    public void updateUser(RequestDto user) throws NotFoundException;
+    public Long updateUser(RequestDto user) throws NotFoundException;
 
     public void deleteUser(String username);
 
