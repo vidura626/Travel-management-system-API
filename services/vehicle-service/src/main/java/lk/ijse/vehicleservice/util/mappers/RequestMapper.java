@@ -1,17 +1,7 @@
-package lk.ijse.userservice.util.mappers;
+package lk.ijse.vehicleservice.util.mappers;
 
 import jakarta.validation.Valid;
-import lk.ijse.userservice.dto.RequestDto;
-import lk.ijse.userservice.dto.ResponseDto;
-import lk.ijse.userservice.dto.embedded.NICorPassportDto;
-import lk.ijse.userservice.entity.Vehicle;
-import lk.ijse.userservice.entity.embedded.NICorPassport;
-import lk.ijse.userservice.exception.RequestDtoValidationException;
-import lk.ijse.userservice.util.validator.RequestDtoValidator;
-import org.mapstruct.InheritInverseConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import lk.ijse.vehicleservice.util.validator.RequestDtoValidator;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,11 +18,11 @@ public interface RequestMapper {
     @Mapping(source = "frontImg", target = "nicOrPassport.frontImg")
     @Mapping(source = "backImg", target = "nicOrPassport.backImg")
     @Mapping(target = "gender", expression = "java(lk.ijse.userservice.util.constants.Gender.valueOf(requestDto.getGender().toUpperCase()))")
-    Vehicle requestDtoToUser(RequestDto requestDto) throws RequestDtoValidationException;
+    User requestDtoToUser(RequestDto requestDto) throws RequestDtoValidationException;
 
 
     @InheritInverseConfiguration
-    ResponseDto requestDtoToUser(Vehicle vehicle);
+    ResponseDto requestDtoToUser(User user);
 
     default String multipartFileToByteArray(MultipartFile file) throws IOException {
         return Base64.getEncoder().encodeToString(file.getBytes());
@@ -85,7 +75,7 @@ public interface RequestMapper {
     }*/
 
     @Mapping(source = "nicOrPassport", target = "niCorPassportDto")
-    ResponseDto userToResponseDto(@Valid Vehicle save);
+    ResponseDto userToResponseDto(@Valid User save);
 
     NICorPassportDto requestDtoToNicOrPassportDto(NICorPassport niCorPassport);
 }
