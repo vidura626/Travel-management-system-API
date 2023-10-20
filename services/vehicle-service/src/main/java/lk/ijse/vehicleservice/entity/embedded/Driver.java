@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Driver {
     @NotNull(message = "Driver name cannot be null")
-    private String name;
+    private String driverName;
     @NotNull(message = "Driver licence front image cannot be null")
     private String licenceFrontImg;
     @NotNull(message = "Driver licence back image cannot be null")

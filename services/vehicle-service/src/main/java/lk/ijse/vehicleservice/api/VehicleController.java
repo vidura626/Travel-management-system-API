@@ -24,30 +24,27 @@ public class VehicleController {
     @PostMapping(path = "/register",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseDto> registerVehicle(@ModelAttribute @Valid RequestDto requestDto) {
-        vehicleService.registerUser(requestDto);
+        vehicleService.registerVehicle(requestDto);
         return ResponseEntity.ok().body(null);
     }
 
     @PutMapping(path = "/update",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseDto> updateVehicle(@ModelAttribute @Valid RequestDto requestDto) {
-        vehicleService.updateUser(requestDto);
+        vehicleService.updateVehicle(requestDto);
         return ResponseEntity.ok().body(null);
     }
 
     @GetMapping(path = "/all",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ResponseDto>> getAllVehicles() {
-        return ResponseEntity.ok().body(vehicleService.findAllUsers());
+        return ResponseEntity.ok().body(vehicleService.findAllVehicles());
     }
 
     @DeleteMapping(path = "/delete/{username}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDto> deleteVehicle(@PathVariable(name = "username") String username) {
-        if (username == null) {
-            throw new NullPointerException("Username cannot be null");
-        }
-        vehicleService.deleteUser(username);
+    public ResponseEntity<ResponseDto> deleteVehicle(@PathVariable(name = "username") long vehicleId) {
+        vehicleService.deleteVehicle(vehicleId);
         return ResponseEntity.ok().body(null);
     }
 }

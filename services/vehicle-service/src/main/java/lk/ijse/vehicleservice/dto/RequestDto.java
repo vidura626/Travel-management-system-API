@@ -21,6 +21,7 @@ public class RequestDto {
     private boolean isHybrid;
     private boolean isAuto;
     private int seatCapacity;
+    private String driverName;
     private MultipartFile licenceFrontImg;
     private MultipartFile licenceBackImg;
     private String remarks;

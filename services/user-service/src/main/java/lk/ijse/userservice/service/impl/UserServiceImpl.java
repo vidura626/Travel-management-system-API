@@ -2,7 +2,7 @@ package lk.ijse.userservice.service.impl;
 
 import lk.ijse.userservice.dto.RequestDto;
 import lk.ijse.userservice.dto.ResponseDto;
-import lk.ijse.userservice.entity.Vehicle;
+import lk.ijse.userservice.entity.User;
 import lk.ijse.userservice.exception.AlreadyExistsException;
 import lk.ijse.userservice.exception.NotFoundException;
 import lk.ijse.userservice.repository.UserRepository;
@@ -19,7 +19,6 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    @Autowired
     private final RequestMapper requestMapper;
 
     @Autowired
@@ -39,13 +38,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long updateUser(RequestDto user) {
-        Vehicle vehicleByUsername = userRepository.findUserByUsername(user.getUsername());
-        if (vehicleByUsername == null) {
+        User userByUsername = userRepository.findUserByUsername(user.getUsername());
+        if (userByUsername == null) {
             throw new NotFoundException("User not found. Username : " + user.getUsername());
         } else {
             if (user.getPassword() != null) {
             } else {
-                user.setPassword(vehicleByUsername.getPassword());
+                user.setPassword(userByUsername.getPassword());
             }
             userRepository.save(requestMapper.requestDtoToUser(user));
             return user.getUserId();
@@ -54,19 +53,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseDto deleteUser(String username) {
-        Vehicle vehicle = userRepository.findUserByUsername(username);
-        if (vehicle == null) {
+        User user = userRepository.findUserByUsername(username);
+        if (user == null) {
             throw new NotFoundException("User not found. Username : " + username);
         } else {
-            userRepository.delete(vehicle);
-            return requestMapper.userToResponseDto(vehicle);
+            userRepository.delete(user);
+            return requestMapper.userToResponseDto(user);
         }
     }
 
     @Override
     public ResponseDto findUserByUsername(String username) {
-        Vehicle vehicle = userRepository.findUserByUsername(username);
-        if (vehicle == null) {
+        User user = userRepository.findUserByUsername(username);
+        if (user == null) {
             throw new NotFoundException("User not found. Username : " + username);
         } else {
             return requestMapper.userToResponseDto(userRepository.findUserByUsername(username));
@@ -75,11 +74,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseDto findUserByEmail(String email) {
-        Vehicle vehicle = userRepository.findUserByEmail(email);
-        if (vehicle == null) {
+        User user = userRepository.findUserByEmail(email);
+        if (user == null) {
             throw new NotFoundException("User not found. Email : " + email);
         } else {
-            return requestMapper.userToResponseDto(vehicle);
+            return requestMapper.userToResponseDto(user);
         }
     }
 

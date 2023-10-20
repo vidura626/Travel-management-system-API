@@ -2,11 +2,11 @@ package lk.ijse.vehicleservice.service.impl;
 
 import lk.ijse.vehicleservice.dto.RequestDto;
 import lk.ijse.vehicleservice.dto.ResponseDto;
+import lk.ijse.vehicleservice.entity.Vehicle;
 import lk.ijse.vehicleservice.exception.AlreadyExistsException;
 import lk.ijse.vehicleservice.exception.NotFoundException;
-import lk.ijse.vehicleservice.repository.UserRepository;
+import lk.ijse.vehicleservice.repository.VehicleRepository;
 import lk.ijse.vehicleservice.service.VehicleService;
-import lk.ijse.vehicleservice.util.constants.Role;
 import lk.ijse.vehicleservice.util.mappers.RequestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,84 +17,61 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {
-    private final UserRepository userRepository;
+    private final VehicleRepository vehicleRepository;
     @Autowired
     private final RequestMapper requestMapper;
 
     @Autowired
-    public VehicleServiceImpl(UserRepository userRepository, RequestMapper requestMapper) {
-        this.userRepository = userRepository;
+    public VehicleServiceImpl(VehicleRepository vehicleRepository, RequestMapper requestMapper) {
+        this.vehicleRepository = vehicleRepository;
         this.requestMapper = requestMapper;
     }
 
     @Override
-    public void registerUser(RequestDto requestDto) {
-        if (userRepository.findUserByUsername(requestDto.getUsername()) != null) {
-            throw new AlreadyExistsException("Username already exists. Username : " + requestDto.getUsername());
+    public void registerVehicle(RequestDto requestDto) {
+        if (vehicleRepository.findVehicleByVehicleId(requestDto.getVehicleId()) != null) {
+            throw new AlreadyExistsException("Vehicle already exists. Vehicle Id : " + requestDto.getVehicleId());
         } else {
-            userRepository.save(requestMapper.requestDtoToUser(requestDto));
+            vehicleRepository.save(requestMapper.requestDtoToVehicle(requestDto));
         }
     }
 
     @Override
-    public Long updateUser(RequestDto user) {
-        User userByUsername = userRepository.findUserByUsername(user.getUsername());
-        if (userByUsername == null) {
-            throw new NotFoundException("User not found. Username : " + user.getUsername());
+    public Long updateVehicle(RequestDto vehicle) {
+        Vehicle vehicleByVehicleId = vehicleRepository.findVehicleByVehicleId(vehicle.getVehicleId());
+        if (vehicleByVehicleId == null) {
+            throw new NotFoundException("Vehicle not found. Vehicle Id : " + vehicle.getVehicleId());
         } else {
-            if (user.getPassword() != null) {
-            } else {
-                user.setPassword(userByUsername.getPassword());
-            }
-            userRepository.save(requestMapper.requestDtoToUser(user));
-            return user.getUserId();
+            vehicleRepository.save(requestMapper.requestDtoToVehicle(vehicle));
+            return vehicle.getVehicleId();
         }
     }
 
     @Override
-    public ResponseDto deleteUser(String username) {
-        User user = userRepository.findUserByUsername(username);
-        if (user == null) {
-            throw new NotFoundException("User not found. Username : " + username);
+    public ResponseDto deleteVehicle(long vehicleId) {
+        Vehicle vehicle = vehicleRepository.findVehicleByVehicleId(vehicleId);
+        if (vehicle == null) {
+            throw new NotFoundException("Vehicle not found. Vehicle Id : " + vehicleId);
         } else {
-            userRepository.delete(user);
-            return requestMapper.userToResponseDto(user);
+            vehicleRepository.delete(vehicle);
+            return requestMapper.userToResponseDto(vehicle);
         }
     }
 
     @Override
-    public ResponseDto findUserByUsername(String username) {
-        User user = userRepository.findUserByUsername(username);
-        if (user == null) {
-            throw new NotFoundException("User not found. Username : " + username);
+    public ResponseDto findVehicleByVehicleId(long vehicleId) {
+        Vehicle vehicle = vehicleRepository.findVehicleByVehicleId(vehicleId);
+        if (vehicle == null) {
+            throw new NotFoundException("Vehicle not found. Vehicle Id : " + vehicleId);
         } else {
-            return requestMapper.userToResponseDto(userRepository.findUserByUsername(username));
+            return requestMapper.userToResponseDto(vehicleRepository.findVehicleByVehicleId(vehicleId));
         }
     }
 
     @Override
-    public ResponseDto findUserByEmail(String email) {
-        User user = userRepository.findUserByEmail(email);
-        if (user == null) {
-            throw new NotFoundException("User not found. Email : " + email);
-        } else {
-            return requestMapper.userToResponseDto(user);
-        }
-    }
-
-    @Override
-    public List<ResponseDto> findAllUsers() {
-        return userRepository
+    public List<ResponseDto> findAllVehicles() {
+        return vehicleRepository
                 .findAll()
-                .stream()
-                .map(requestMapper::userToResponseDto)
-                .collect(toList());
-    }
-
-    @Override
-    public List<ResponseDto> findUserByRole(Role role) {
-        return userRepository
-                .findUsersByRole(role.toString())
                 .stream()
                 .map(requestMapper::userToResponseDto)
                 .collect(toList());
