@@ -6,14 +6,13 @@ import lk.ijse.userservice.exception.NotFoundException;
 import lk.ijse.userservice.util.constants.Role;
 
 import java.util.List;
-import java.util.Locale;
 
 public interface UserService {
     public void registerUser(RequestDto user);
 
     public Long updateUser(RequestDto user) throws NotFoundException;
 
-    public void deleteUser(String username);
+    public ResponseDto deleteUser(String username);
 
     public ResponseDto findUserByUsername(String username);
 
@@ -25,7 +24,7 @@ public interface UserService {
 
     public ResponseDto changePassword(String username, String password);
 
-    public void changeEmail(String username, String email);
+    public ResponseDto changeEmail(String username, String email);
 
-    public void changeContact(String username, String contact);
+    public ResponseDto changeContact(String username, String contact);
 }

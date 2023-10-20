@@ -18,10 +18,11 @@ public class ResponseDto {
     private String name;
     private String gender;
     private Date dob;
-    private MultipartFile proPic;
+    private String proPic;
     private String remarks;
     private NICorPassportDto niCorPassportDto;
     private Date regDate;
+    private Date modifiedDate;
     private String username;
     private String email;
     private String address;

@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -51,36 +53,52 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(String username) {
-        ResponseDto user = findUserByUsername(username);
-        if (user == null)
+    public ResponseDto deleteUser(String username) {
+        User user = userRepository.findUserByUsername(username);
+        if (user == null) {
             throw new NotFoundException("User not found. Username : " + username);
-//        userRepository.delete(userMapper.userDtoToUser(user));
+        } else {
+            userRepository.delete(user);
+            return requestMapper.userToResponseDto(user);
+        }
     }
 
     @Override
     public ResponseDto findUserByUsername(String username) {
-//        return requestMapper.userToUserDto(userRepository.findUserByUsername(username));
-        return null;
+        User user = userRepository.findUserByUsername(username);
+        if (user == null) {
+            throw new NotFoundException("User not found. Username : " + username);
+        } else {
+            return requestMapper.userToResponseDto(userRepository.findUserByUsername(username));
+        }
     }
 
     @Override
     public ResponseDto findUserByEmail(String email) {
-//        return requestMapper.userToUserDto(userRepository.findUserByEmail(email));
-        return null;
+        User user = userRepository.findUserByEmail(email);
+        if (user == null) {
+            throw new NotFoundException("User not found. Email : " + email);
+        } else {
+            return requestMapper.userToResponseDto(user);
+        }
     }
 
     @Override
     public List<ResponseDto> findAllUsers() {
-//        return userMapper.userListToUserDtoList(userRepository.findAll());
-        return null;
+        return userRepository
+                .findAll()
+                .stream()
+                .map(requestMapper::userToResponseDto)
+                .collect(toList());
     }
 
     @Override
     public List<ResponseDto> findUserByRole(Role role) {
-        return null;
-//        return userMapper.userListToUserDtoList(userRepository.findUsersByRole(role));
-
+        return userRepository
+                .findUsersByRole(role)
+                .stream()
+                .map(requestMapper::userToResponseDto)
+                .collect(toList());
     }
 
     @Override
@@ -95,20 +113,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeEmail(String username, String email) {
+    public ResponseDto changeEmail(String username, String email) {
         User user = userRepository.findUserByUsername(username);
-        if (user == null)
+        if (user == null) {
             throw new NotFoundException("User not found");
-        user.setEmail(email);
-//        userRepository.save(userMapper.userDtoToUser(user));
+        } else {
+            user.setEmail(email);
+            return requestMapper.userToResponseDto(userRepository.save(user));
+        }
     }
 
     @Override
-    public void changeContact(String username, String contact) {
+    public ResponseDto changeContact(String username, String contact) {
         User user = userRepository.findUserByUsername(username);
-        if (user == null)
+        if (user == null) {
             throw new NotFoundException("User not found");
-        user.setContact(contact);
-//        userRepository.save(userMapper.userDtoToUser(user));
+        } else {
+            user.setContact(contact);
+            return requestMapper.userToResponseDto(userRepository.save(user));
+        }
     }
 }

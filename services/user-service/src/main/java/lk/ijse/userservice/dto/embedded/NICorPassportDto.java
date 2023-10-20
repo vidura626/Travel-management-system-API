@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,6 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 public class NICorPassportDto {
     private String id;
-    private MultipartFile frontImg;
-    private MultipartFile backImg;
+    private String frontImg;
+    private String backImg;
 }

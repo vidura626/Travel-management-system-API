@@ -59,6 +59,7 @@ public class RequestDto {
             regexp = "^(?:7|0|(?:\\+94)|(?:94))[0-9]{9,10}$")
     private String contact;
     @Pattern(message = "Role should be user or admin",
-            regexp = "^(user|admin)$")
+            regexp = "^(user|admin)$",
+            flags = {Pattern.Flag.CASE_INSENSITIVE})
     private String role;
 }

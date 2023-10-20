@@ -11,6 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class NICorPassport {
     private String id;
-    private byte[] frontImg;
-    private byte[] backImg;
+    private String frontImg;
+    private String backImg;
 }

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,10 +26,11 @@ public class User {
     private String name;
     private Gender gender;
     private Date dob;
-    private byte[] proPic;
+    private String proPic;
     private String remarks;
     private NICorPassport nicOrPassport;
     private Date regDate;
+    private Date modifiedDate;
     private String username;
     private String password;
     private String email;
