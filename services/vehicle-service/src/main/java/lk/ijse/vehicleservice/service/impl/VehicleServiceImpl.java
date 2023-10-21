@@ -1,5 +1,6 @@
 package lk.ijse.vehicleservice.service.impl;
 
+import jakarta.validation.Valid;
 import lk.ijse.vehicleservice.dto.RequestDto;
 import lk.ijse.vehicleservice.dto.ResponseDto;
 import lk.ijse.vehicleservice.entity.Vehicle;
@@ -13,12 +14,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {
     private final VehicleRepository vehicleRepository;
-    @Autowired
     private final RequestMapper requestMapper;
 
     @Autowired
@@ -28,22 +29,25 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public void registerVehicle(RequestDto requestDto) {
+    public void registerVehicle(RequestDto requestDto) throws AlreadyExistsException {
         if (vehicleRepository.findVehicleByVehicleId(requestDto.getVehicleId()) != null) {
-            throw new AlreadyExistsException("Vehicle already exists. Vehicle Id : " + requestDto.getVehicleId());
+            throw new AlreadyExistsException("Vehicle already exists. Vehicle Id : "
+                    + requestDto.getVehicleId());
         } else {
             vehicleRepository.save(requestMapper.requestDtoToVehicle(requestDto));
         }
     }
 
     @Override
-    public Long updateVehicle(RequestDto vehicle) {
-        Vehicle vehicleByVehicleId = vehicleRepository.findVehicleByVehicleId(vehicle.getVehicleId());
-        if (vehicleByVehicleId == null) {
+    public void updateVehicle(RequestDto vehicle) {
+        if (vehicleRepository.findVehicleByVehicleId(vehicle.getVehicleId()) == null) {
             throw new NotFoundException("Vehicle not found. Vehicle Id : " + vehicle.getVehicleId());
         } else {
-            vehicleRepository.save(requestMapper.requestDtoToVehicle(vehicle));
-            return vehicle.getVehicleId();
+//            For validation
+            Vehicle vehicle1 = requestMapper.requestDtoToVehicle(vehicle);
+            ResponseDto responseDto = requestMapper.requestDtoToUser(vehicle1);
+            responseDto.setAuto(true);
+            vehicleRepository.save(vehicle1);
         }
     }
 

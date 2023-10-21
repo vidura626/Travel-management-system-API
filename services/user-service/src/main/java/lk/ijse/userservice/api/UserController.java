@@ -29,7 +29,7 @@ public class UserController {
         return ResponseEntity.ok().body(null);
     }
 
-    @PutMapping(path = "/update",
+    @PostMapping(path = "/update",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseDto> updateUser(@ModelAttribute @Valid RequestDto requestDto) {
         userService.updateUser(requestDto);

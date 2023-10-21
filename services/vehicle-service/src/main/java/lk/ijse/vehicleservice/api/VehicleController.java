@@ -28,7 +28,7 @@ public class VehicleController {
         return ResponseEntity.ok().body(null);
     }
 
-    @PutMapping(path = "/update",
+    @PostMapping(path = "/update",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseDto> updateVehicle(@ModelAttribute @Valid RequestDto requestDto) {
         vehicleService.updateVehicle(requestDto);
@@ -41,9 +41,9 @@ public class VehicleController {
         return ResponseEntity.ok().body(vehicleService.findAllVehicles());
     }
 
-    @DeleteMapping(path = "/delete/{username}",
+    @DeleteMapping(path = "/delete/{vehicleId}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDto> deleteVehicle(@PathVariable(name = "username") long vehicleId) {
+    public ResponseEntity<ResponseDto> deleteVehicle(@PathVariable(name = "vehicleId") long vehicleId) {
         vehicleService.deleteVehicle(vehicleId);
         return ResponseEntity.ok().body(null);
     }

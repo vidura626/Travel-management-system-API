@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
         errors.put("error", ex.getMessage());
         return errors;
     }
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public Map<String, String> handleException(Exception ex) {
         Map<String, String> errors = new HashMap<>();

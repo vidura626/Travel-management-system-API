@@ -2,19 +2,23 @@ package lk.ijse.vehicleservice.entity;
 
 import jakarta.validation.constraints.*;
 import lk.ijse.vehicleservice.entity.embedded.Driver;
-import lk.ijse.vehicleservice.util.constants.FuelType;
 import lk.ijse.vehicleservice.entity.embedded.VehicleImages;
+import lk.ijse.vehicleservice.util.constants.FuelType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
+@Document
 public class Vehicle {
+    @Id
     @Min(value = 1, message = "Vehicle Id cannot be less than 1")
     @Max(value = 9999999999L, message = "Vehicle Id cannot be greater than 9999999999")
     private long vehicleId;

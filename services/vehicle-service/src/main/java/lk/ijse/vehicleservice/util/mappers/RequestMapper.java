@@ -1,5 +1,6 @@
 package lk.ijse.vehicleservice.util.mappers;
 
+import jakarta.validation.Valid;
 import lk.ijse.vehicleservice.dto.RequestDto;
 import lk.ijse.vehicleservice.dto.ResponseDto;
 import lk.ijse.vehicleservice.entity.Vehicle;
@@ -24,7 +25,7 @@ public interface RequestMapper {
     @Mapping(target = "images.frontImg", source = "frontImg")
     @Mapping(target = "images.backImg", source = "backImg")
     @Mapping(target = "images.rearImg", source = "rearImg")
-    @Mapping(target = "fuelType", expression = "java(lk.ijse.vehicleservice.util.constants.FuelType.valueOf(requestDto.getFuelType().toUpperCase()))")
+    @Mapping(target = "fuelType", expression = "java(lk.ijse.vehicleservice.util.constants.FuelType.valueOf(requestDto.getFuelType().toString().toUpperCase()))")
     Vehicle requestDtoToVehicle(RequestDto requestDto) throws RequestDtoValidationException;
 
 

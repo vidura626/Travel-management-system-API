@@ -29,18 +29,18 @@ class VehicleControllerTest {
         MockMultipartFile backImgFile = new MockMultipartFile("backImg", "test-backImg.jpg", "image/jpeg", "backImgData".getBytes());
 
 //        Save
-        ResultActions perform = mockMvc.perform(multipart("/api/user/register")
+        ResultActions perform = mockMvc.perform(multipart("/api/user/update")
                 .file(proPicFile)
                 .file(frontImgFile)
                 .file(backImgFile)
                 .param("userId", "1")
                 .param("username", "johndoe123")
-                .param("name", "John Doe")
+                .param("name", "")
                 .param("gender", "male")
                 .param("dob", "1/1/1990")
                 .param("remarks", "Some remarks")
                 .param("nicOrPassport", "123456789V")
-                .param("password", "johndoe123")
+                .param("password", "jD@@ndoe123")
                 .param("email", "johndoe@example.com")
                 .param("address", "123 Main Street")
                 .param("contact", "0771234567")
