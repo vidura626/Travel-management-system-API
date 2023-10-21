@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -33,55 +34,54 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public void registerVehicle(RequestDto requestDto) throws AlreadyExistsException {
-        if (hotelRepository.findVehicleByVehicleId(requestDto.getVehicleId()) != null) {
-            throw new AlreadyExistsException("Vehicle already exists. Vehicle Id : "
-                    + requestDto.getVehicleId());
+    public void registerHotel(RequestDto requestDto) throws AlreadyExistsException {
+        if (hotelRepository.findById(requestDto.getHotelId()).isPresent()) {
+            throw new AlreadyExistsException("Hotel already exists. Hotel Id : " + requestDto.getHotelId());
         } else {
-            hotelRepository.save(requestMapper.requestDtoToVehicle(requestDto));
+            hotelRepository.save(requestMapper.requestDtoToHotel(requestDto));
         }
     }
 
     @Override
-    public void updateVehicle(RequestDto vehicle) {
-        if (hotelRepository.findVehicleByVehicleId(vehicle.getVehicleId()) == null) {
-            throw new NotFoundException("Vehicle not found. Vehicle Id : " + vehicle.getVehicleId());
+    public void updateHotel(RequestDto requestDto) {
+        Optional<Hotel> byId = hotelRepository.findById(requestDto.getHotelId());
+        if (byId.isEmpty()) {
+            throw new NotFoundException("Hotel not found. Hotel Id : " + requestDto.getHotelId());
         } else {
-//            For validation
-            Hotel hotel1 = requestMapper.requestDtoToVehicle(vehicle);
-            ResponseDto responseDto = requestMapper.requestDtoToUser(hotel1);
-            responseDto.setAuto(true);
-            hotelRepository.save(hotel1);
+            hotelRepository.save(requestMapper.requestDtoToHotel(requestDto));
         }
     }
 
     @Override
-    public void deleteVehicle(long vehicleId) {
-        Hotel hotel = hotelRepository.findVehicleByVehicleId(vehicleId);
-        if (hotel == null) {
-            throw new NotFoundException("Vehicle not found. Vehicle Id : " + vehicleId);
+    public void deleteHotel(long hotelId) {
+        Optional<Hotel> byId = hotelRepository.findById(hotelId);
+        if (byId.isEmpty()) {
+            throw new NotFoundException("Hotel not found. Hotel Id : " + hotelId);
         } else {
-            hotelRepository.delete(hotel);
-            requestMapper.userToResponseDto(hotel);
+            hotelRepository.delete(byId.get());
         }
     }
 
     @Override
-    public ResponseDto findVehicleByVehicleId(long vehicleId) {
-        Hotel hotel = hotelRepository.findVehicleByVehicleId(vehicleId);
-        if (hotel == null) {
-            throw new NotFoundException("Vehicle not found. Vehicle Id : " + vehicleId);
+    public ResponseDto findHotelByHotelId(long hotelId) {
+        Optional<Hotel> byId = hotelRepository.findById(hotelId);
+        if (byId.isEmpty()) {
+            throw new NotFoundException("Hotel not found. Hotel Id : " + hotelId);
         } else {
-            return requestMapper.userToResponseDto(hotelRepository.findVehicleByVehicleId(vehicleId));
+            return requestMapper.hotelToResponseDto(byId.get());
         }
     }
 
     @Override
-    public List<ResponseDto> findAllVehicles() {
-        return hotelRepository
-                .findAll()
+    public List<ResponseDto> findAllHotels() {
+        return hotelRepository.findAll().stream().map(requestMapper::hotelToResponseDto).collect(toList());
+    }
+
+    @Override
+    public List<ResponseDto> findHotelsByHotelCategory(int hotelCategory) {
+        return hotelRepository.findHotelsByHotelCategory(hotelCategory)
                 .stream()
-                .map(requestMapper::userToResponseDto)
+                .map(requestMapper::hotelToResponseDto)
                 .collect(toList());
     }
 }

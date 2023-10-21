@@ -21,6 +21,7 @@ public class ResponseDto {
     private long hotelId;
     @NotBlank(message = "Hotel name cannot be blank")
     @Size(min = 3, message = "Hotel name should be at least 3 characters")
+    private String hotelName;
     @NotBlank(message = "Remarks cannot be blank")
     private String remarks;
     @Min(1)
@@ -29,6 +30,8 @@ public class ResponseDto {
     private int hotelCategory;
     @NotNull(message = "Hotel fee cannot be null")
     private HotelFeeDto fee;
+    @Positive(message = "Cancellation fee cannot be less than 1")
+    private double cancellationFee;
     @NotNull(message = "Hotel contacts cannot be null")
     private HotelContactDto contacts;
     @NotNull(message = "Hotel location cannot be null")

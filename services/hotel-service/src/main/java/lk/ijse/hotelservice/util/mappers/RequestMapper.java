@@ -8,32 +8,24 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.Base64;
 
 @Mapper(componentModel = "spring")
 public interface RequestMapper {
     RequestMapper INSTANCE = Mappers.getMapper(RequestMapper.class);
 
-
-    @Mapping(target = "driver.driverName", source = "driverName")
-    @Mapping(target = "driver.licenceFrontImg", source = "licenceFrontImg")
-    @Mapping(target = "driver.licenceBackImg", source = "licenceBackImg")
-    @Mapping(target = "images.frontImg", source = "frontImg")
-    @Mapping(target = "images.backImg", source = "backImg")
-    @Mapping(target = "images.rearImg", source = "rearImg")
-    @Mapping(target = "fuelType", expression = "java(lk.ijse.vehicleservice.util.constants.FuelType.valueOf(requestDto.getFuelType().toString().toUpperCase()))")
-    Hotel requestDtoToVehicle(RequestDto requestDto) throws RequestDtoValidationException;
+    @Mapping(source = "feeOpt1", target = "fee.feeOpt1")
+    @Mapping(source = "feeOpt2", target = "fee.feeOpt2")
+    @Mapping(source = "feeOpt3", target = "fee.feeOpt3")
+    @Mapping(source = "feeOpt4", target = "fee.feeOpt4")
+    @Mapping(source = "contact1", target = "contacts.contact1")
+    @Mapping(source = "contact2", target = "contacts.contact2")
+    @Mapping(source = "locationName", target = "location.locationName")
+    @Mapping(source = "googleMapLocation", target = "location.googleMapLocation")
+    Hotel requestDtoToHotel(RequestDto requestDto) throws RequestDtoValidationException;
 
 
     @InheritInverseConfiguration
-    ResponseDto requestDtoToUser(Hotel hotel) throws RequestDtoValidationException;
+    RequestDto requestDtoToHotel(Hotel hotel) throws RequestDtoValidationException;
 
-    default String multipartFileToBase64String(MultipartFile file) throws IOException {
-        return Base64.getEncoder().encodeToString(file.getBytes());
-    }
-
-    ResponseDto userToResponseDto(Hotel hotel);
+    ResponseDto hotelToResponseDto(Hotel hotel);
 }

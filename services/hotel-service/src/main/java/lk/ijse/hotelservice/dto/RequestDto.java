@@ -1,16 +1,11 @@
 package lk.ijse.hotelservice.dto;
 
 import jakarta.validation.constraints.*;
-import lk.ijse.hotelservice.dto.embedded.HotelContactDto;
-import lk.ijse.hotelservice.dto.embedded.HotelFeeDto;
-import lk.ijse.hotelservice.dto.embedded.HotelLocationDto;
-import lk.ijse.hotelservice.util.constants.FuelType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +18,7 @@ public class RequestDto {
     private long hotelId;
     @NotBlank(message = "Hotel name cannot be blank")
     @Size(min = 3, message = "Hotel name should be at least 3 characters")
+    private String hotelName;
     @NotBlank(message = "Remarks cannot be blank")
     private String remarks;
     @Min(1)
@@ -30,17 +26,15 @@ public class RequestDto {
     @Positive(message = "Rating cannot be less than 1 or greater than 5")
     private int hotelCategory;
     @Positive(message = "Fee option cannot be less than 1")
-    @NotBlank(message = "Opt cannot be null")
     private double feeOpt1;
     @Positive(message = "Fee option cannot be less than 1")
-    @NotBlank(message = "Opt cannot be null")
     private double feeOpt2;
     @Positive(message = "Fee option cannot be less than 1")
-    @NotBlank(message = "Opt cannot be null")
     private double feeOpt3;
     @Positive(message = "Fee option cannot be less than 1")
-    @NotBlank(message = "Opt cannot be null")
     private double feeOpt4;
+    @Positive(message = "Cancellation fee cannot be less than 1")
+    private double cancellationFee;
     @NotNull(message = "Hotel contacts cannot be null")
     @Pattern(message = "Invalid phone number", regexp = "^(\\+94|0)\\d{9}$")
     private String contact1;

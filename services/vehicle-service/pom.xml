@@ -9,7 +9,7 @@
         <version>1.0.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>hotel-service</artifactId>
+    <artifactId>vehicle-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>hotel-service</name>
     <description>Vehicle microservice</description>

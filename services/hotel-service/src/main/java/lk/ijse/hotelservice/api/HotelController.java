@@ -12,39 +12,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/vehicle")
-public class VehicleController {
+@RequestMapping("api/hotel")
+public class HotelController {
     private final HotelService hotelService;
 
     @Autowired
-    public VehicleController(HotelService hotelService) {
+    public HotelController(HotelService hotelService) {
         this.hotelService = hotelService;
     }
 
     @PostMapping(path = "/register",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseDto> registerVehicle(@ModelAttribute @Valid RequestDto requestDto) {
-        hotelService.registerVehicle(requestDto);
+        hotelService.registerHotel(requestDto);
         return ResponseEntity.ok().body(null);
     }
 
     @PutMapping(path = "/update",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseDto> updateVehicle(@ModelAttribute @Valid RequestDto requestDto) {
-        hotelService.updateVehicle(requestDto);
+        hotelService.updateHotel(requestDto);
         return ResponseEntity.ok().body(null);
     }
 
     @GetMapping(path = "/all",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ResponseDto>> getAllVehicles() {
-        return ResponseEntity.ok().body(hotelService.findAllVehicles());
+        return ResponseEntity.ok().body(hotelService.findAllHotels());
     }
 
     @DeleteMapping(path = "/delete/{vehicleId}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> deleteVehicle(@PathVariable(name = "vehicleId") long vehicleId) {
-        hotelService.deleteVehicle(vehicleId);
+        hotelService.deleteHotel(vehicleId);
         return ResponseEntity.ok().body(vehicleId);
     }
 }

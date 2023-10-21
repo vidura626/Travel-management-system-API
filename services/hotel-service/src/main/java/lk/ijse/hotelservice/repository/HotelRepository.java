@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface HotelRepository extends MongoRepository<Hotel, Long> {
 
-    public Hotel findByName(String name);
+    public List<Hotel> findHotelsByHotelCategory(int hotelCategory);
 }

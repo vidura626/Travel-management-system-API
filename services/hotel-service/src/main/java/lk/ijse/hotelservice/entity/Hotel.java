@@ -1,8 +1,6 @@
 package lk.ijse.hotelservice.entity;
 
 import jakarta.validation.constraints.*;
-import lk.ijse.hotelservice.dto.embedded.HotelContactDto;
-import lk.ijse.hotelservice.dto.embedded.HotelLocationDto;
 import lk.ijse.hotelservice.entity.embedded.HotelContact;
 import lk.ijse.hotelservice.entity.embedded.HotelFee;
 import lk.ijse.hotelservice.entity.embedded.HotelLocation;
@@ -26,6 +24,7 @@ public class Hotel {
     private long hotelId;
     @NotBlank(message = "Hotel name cannot be blank")
     @Size(min = 3, message = "Hotel name should be at least 3 characters")
+    private String hotelName;
     @NotBlank(message = "Remarks cannot be blank")
     private String remarks;
     @Min(1)
@@ -34,6 +33,8 @@ public class Hotel {
     private int hotelCategory;
     @NotNull(message = "Hotel fee cannot be null")
     private HotelFee fee;
+    @Positive(message = "Cancellation fee cannot be less than 1")
+    private double cancellationFee;
     @NotNull(message = "Hotel contacts cannot be null")
     private HotelContact contacts;
     @NotNull(message = "Hotel location cannot be null")
