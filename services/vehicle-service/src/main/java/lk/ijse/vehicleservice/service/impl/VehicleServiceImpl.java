@@ -1,6 +1,5 @@
 package lk.ijse.vehicleservice.service.impl;
 
-import jakarta.validation.Valid;
 import lk.ijse.vehicleservice.dto.RequestDto;
 import lk.ijse.vehicleservice.dto.ResponseDto;
 import lk.ijse.vehicleservice.entity.Vehicle;
@@ -9,16 +8,21 @@ import lk.ijse.vehicleservice.exception.NotFoundException;
 import lk.ijse.vehicleservice.repository.VehicleRepository;
 import lk.ijse.vehicleservice.service.VehicleService;
 import lk.ijse.vehicleservice.util.mappers.RequestMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 
+@Slf4j
 @Service
 public class VehicleServiceImpl implements VehicleService {
+
+    private final Logger loggeer = LoggerFactory.getLogger(VehicleServiceImpl.class);
     private final VehicleRepository vehicleRepository;
     private final RequestMapper requestMapper;
 
@@ -52,13 +56,13 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public ResponseDto deleteVehicle(long vehicleId) {
+    public void deleteVehicle(long vehicleId) {
         Vehicle vehicle = vehicleRepository.findVehicleByVehicleId(vehicleId);
         if (vehicle == null) {
             throw new NotFoundException("Vehicle not found. Vehicle Id : " + vehicleId);
         } else {
             vehicleRepository.delete(vehicle);
-            return requestMapper.userToResponseDto(vehicle);
+            requestMapper.userToResponseDto(vehicle);
         }
     }
 

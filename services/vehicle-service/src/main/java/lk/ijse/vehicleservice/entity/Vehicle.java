@@ -32,8 +32,8 @@ public class Vehicle {
     @Max(value = 100, message = "fuel Usage cannot be greater than 100")
     private int fuelUsage;
     private FuelType fuelType;
-    private boolean isHybrid;
-    private boolean isAuto;
+    private Boolean isHybrid;
+    private Boolean isAuto;
     @Min(value = 1, message = "Seat capacity cannot be less than 1")
     @Max(value = 100, message = "Seat capacity cannot be greater than 100")
     private int seatCapacity;

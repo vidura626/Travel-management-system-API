@@ -9,7 +9,8 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -29,37 +30,69 @@ class VehicleControllerTest {
 
 //        Save
         ResultActions perform = mockMvc
-                .perform(multipart("/api/vehicle/update")
-                .file(licenceFrontImg)
-                .file(licenceBackImg)
-                .file(frontImg)
-                .file(backImg)
-                .file(rearImg)
-                .param("vehicleId", "1")
-                .param("name", "bmw")
-                .param("fuelCapacity", "20")
-                .param("fuelUsage", "12")
-                .param("fuelType", "DIESEL")
-                .param("isHybrid", Boolean.TRUE.toString())
-                .param("isAuto", "0")
-                .param("seatCapacity", "5")
-                .param("driverName", "John")
-                .param("remarks", "johnd owef ewef om")
-                .param("vehicleType", "Auto")
-                .param("vehicleCategory", "Large")
-                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
+                .perform(multipart("/api/vehicle/register")
+                        .file(licenceFrontImg)
+                        .file(licenceBackImg)
+                        .file(frontImg)
+                        .file(backImg)
+                        .file(rearImg)
+                        .param("vehicleId", "1")
+                        .param("name", "bmw")
+                        .param("fuelCapacity", "20")
+                        .param("fuelUsage", "12")
+                        .param("fuelType", "DIESEL")
+                        .param("isHybrid","true")
+                        .param("isAuto", "false")
+                        .param("seatCapacity", "5")
+                        .param("driverName", "John")
+                        .param("remarks", "johnd owef ewef om")
+                        .param("vehicleType", "Auto")
+                        .param("vehicleCategory", "Large")
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void updateVehicle() {
+    void updateVehicle() throws Exception {
+        MockMultipartFile licenceFrontImg = new MockMultipartFile("licenceFrontImg", "test-proPic.jpg", "image/jpeg", "proPicData".getBytes());
+        MockMultipartFile licenceBackImg = new MockMultipartFile("licenceBackImg", "test-frontImg.jpg", "image/jpeg", "frontImgData".getBytes());
+        MockMultipartFile frontImg = new MockMultipartFile("frontImg", "test-backImg.jpg", "image/jpeg", "backImgData".getBytes());
+        MockMultipartFile backImg = new MockMultipartFile("backImg", "test-backImg.jpg", "image/jpeg", "backImgData".getBytes());
+        MockMultipartFile rearImg = new MockMultipartFile("rearImg", "test-backImg.jpg", "image/jpeg", "backImgData".getBytes());
+
+//        Save
+        ResultActions perform = mockMvc
+                .perform(multipart("/api/vehicle/update")
+                        .file(licenceFrontImg)
+                        .file(licenceBackImg)
+                        .file(frontImg)
+                        .file(backImg)
+                        .file(rearImg)
+                        .param("vehicleId", "1")
+                        .param("name", "bmw")
+                        .param("fuelCapacity", "20")
+                        .param("fuelUsage", "12")
+                        .param("fuelType", "DIESEL")
+                        .param("isHybrid","true")
+                        .param("isAuto", "false")
+                        .param("seatCapacity", "5")
+                        .param("driverName", "John")
+                        .param("remarks", "johnd owef ewef om")
+                        .param("vehicleType", "Auto")
+                        .param("vehicleCategory", "Large")
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
+                .andExpect(status().isOk());
     }
 
     @Test
-    void getAllVehicles() {
+    void getAllVehicles() throws Exception {
+        mockMvc.perform(get("/api/vehicle/all"))
+                .andExpect(status().isOk()).andDo(print());
     }
 
     @Test
-    void deleteVehicle() {
+    void deleteVehicle() throws Exception {
+        mockMvc.perform(delete("/api/vehicle/delete/1"))
+                .andExpect(status().isOk()).andDo(print());
     }
 }

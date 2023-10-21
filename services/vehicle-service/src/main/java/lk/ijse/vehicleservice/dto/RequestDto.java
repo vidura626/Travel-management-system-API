@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
@@ -26,9 +25,9 @@ public class RequestDto {
     @Min(value = 1, message = "fuel Usage cannot be less than 1")
     @Max(value = 100, message = "fuel Usage cannot be greater than 100")
     private int fuelUsage;
+    private Boolean isHybrid;
+    private Boolean isAuto;
     private FuelType fuelType;
-    private boolean isHybrid;
-    private boolean isAuto;
     @Min(value = 1, message = "Seat capacity cannot be less than 1")
     @Max(value = 100, message = "Seat capacity cannot be greater than 100")
     private int seatCapacity;

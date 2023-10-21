@@ -43,8 +43,8 @@ public class VehicleController {
 
     @DeleteMapping(path = "/delete/{vehicleId}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDto> deleteVehicle(@PathVariable(name = "vehicleId") long vehicleId) {
+    public ResponseEntity<Long> deleteVehicle(@PathVariable(name = "vehicleId") long vehicleId) {
         vehicleService.deleteVehicle(vehicleId);
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().body(vehicleId);
     }
 }

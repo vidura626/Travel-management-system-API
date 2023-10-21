@@ -10,7 +10,7 @@ public interface VehicleService {
 
     public void updateVehicle(RequestDto vehicle);
 
-    public ResponseDto deleteVehicle(long vehicleId);
+    public void deleteVehicle(long vehicleId);
 
     public ResponseDto findVehicleByVehicleId(long vehicleId);
 
