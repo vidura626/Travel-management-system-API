@@ -8,7 +8,7 @@
         <version>1.0.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>guide-service</artifactId>
+    <artifactId>user-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>guide-service</name>
     <description>User microservice</description>

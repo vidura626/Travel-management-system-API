@@ -28,7 +28,7 @@ public class GuideController {
         return ResponseEntity.ok().body(null);
     }
 
-    @PostMapping(path = "/update",
+    @PutMapping(path = "/update",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseDto> updateGuide(@ModelAttribute @Valid RequestDto requestDto) {
         guideService.updateGuide(requestDto);

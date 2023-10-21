@@ -32,7 +32,7 @@ public class ResponseDto {
     private Date dob;
     @NotNull(message = "Profile Picture cannot be null or blank")
     private String guideImage;
-    private NICorPassportDto nicOrPassport;
+    private NICorPassportDto nicOrPassportDto;
     @NotBlank(message = "Address cannot be null or blank")
     private String address;
     @NotBlank(message = "Contact cannot be blank")

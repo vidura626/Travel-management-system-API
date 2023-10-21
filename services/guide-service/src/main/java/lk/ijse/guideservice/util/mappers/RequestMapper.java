@@ -24,10 +24,9 @@ public interface RequestMapper {
 
     @Mapping(source = "nicOrPassport", target = "nicOrPassport.id")
     @Mapping(source = "guideId", qualifiedByName = "guide", target = "guideId")
-    @Mapping(source = "password", qualifiedByName = "password", target = "password")
     @Mapping(source = "frontImg", target = "nicOrPassport.frontImg")
     @Mapping(source = "backImg", target = "nicOrPassport.backImg")
-    @Mapping(target = "gender", expression = "java(lk.ijse.userservice.util.constants.Gender.valueOf(requestDto.getGender().toUpperCase()))")
+    @Mapping(target = "gender", expression = "java(lk.ijse.guideservice.util.constants.Gender.valueOf(requestDto.getGender().toUpperCase()))")
     Guide guideToRequestDto(RequestDto requestDto) throws RequestDtoValidationException;
 
 
@@ -38,53 +37,7 @@ public interface RequestMapper {
         return Base64.getEncoder().encodeToString(file.getBytes());
     }
 
-   /* default MultipartFile multipartFileToByteArray(byte[] byteArray) throws IOException {
-        return new MultipartFile() {
-            @Override
-            public String getName() {
-                return null;
-            }
-
-            @Override
-            public String getOriginalFilename() {
-                return null;
-            }
-
-            @Override
-            public String getContentType() {
-                return null;
-            }
-
-            @Override
-            public boolean isEmpty() {
-                return byteArray == null || byteArray.length == 0;
-            }
-
-            @Override
-            public long getSize() {
-                return byteArray.length;
-            }
-
-            @Override
-            public byte[] getBytes() throws IOException {
-                return byteArray;
-            }
-
-            @Override
-            public InputStream getInputStream() throws IOException {
-                return new ByteArrayInputStream(byteArray);
-            }
-
-            @Override
-            public void transferTo(File dest) throws IOException, IllegalStateException {
-                try (FileOutputStream fileOutputStream = new FileOutputStream(dest);) {
-                    fileOutputStream.write(byteArray);
-                }
-            }
-        };
-    }*/
-
-    @Mapping(source = "nicOrPassport", target = "niCorPassportDto")
+    @Mapping(source = "nicOrPassport", target = "nicOrPassportDto")
     ResponseDto guideToResponseDto(@Valid Guide guide);
 
     NICorPassportDto nicToNicDto(NICorPassport niCorPassport);

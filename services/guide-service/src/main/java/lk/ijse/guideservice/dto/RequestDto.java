@@ -23,7 +23,7 @@ public class RequestDto {
     @Pattern(message = "Name should contain only letters",
             regexp = "^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)$")
     private String name;
-    private Gender gender;
+    private String gender;
     @NotNull(message = "Date of Birth cannot be null")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dob;
@@ -32,9 +32,9 @@ public class RequestDto {
     @Pattern(message = "NIC or Passport is present in invalid format",
             regexp = "^(?:[0-9]{9}[xXvV]|[0-9]{12}|[A-Z][0-9]{8})$")
     private String nicOrPassport;
-    @NotBlank(message = "Profile Picture cannot be null or blank")
+    @NotNull(message = "Profile Picture cannot be null")
     private MultipartFile frontImg;
-    @NotBlank(message = "Profile Picture cannot be null or blank")
+    @NotNull(message = "Profile Picture cannot be null")
     private MultipartFile backImg;
     @NotBlank(message = "Address cannot be null or blank")
     private String address;
