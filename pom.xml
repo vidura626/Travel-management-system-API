@@ -17,7 +17,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>services/vehicle-service</module>
-        <module>services/user-service</module>
+        <module>services/guide-service</module>
         <module>services/guide-service</module>
         <module>services/hotel-service</module>
         <module>services/travel-service</module>
