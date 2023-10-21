@@ -16,7 +16,7 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <modules>
-        <module>services/vehicle-service</module>
+        <module>services/hotel-service</module>
         <module>services/guide-service</module>
         <module>services/guide-service</module>
         <module>services/hotel-service</module>
