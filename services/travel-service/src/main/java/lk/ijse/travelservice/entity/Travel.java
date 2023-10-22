@@ -27,9 +27,7 @@ import java.sql.Date;
 @Entity
 public class Travel implements Serializable {
     @Id
-    @Min(value = 1, message = "Hotel Id cannot be less than 1")
-    @Max(value = 9999999999L, message = "Hotel Id cannot be greater than 9999999999")
-    @Pattern(regexp = "^(NEXT)[0-9]{1,}$")
+    @Pattern(regexp = "^(NEXT_)[0-9]{1,}$")
     private String packageID;
     @ManyToOne
     @NotNull(message = "Package Detail of travel package cannot be null")
@@ -53,7 +51,6 @@ public class Travel implements Serializable {
     @Embedded
     @Nullable
     private PackageValueDetails packageValueDetails;
-    @Min(value = 0, message = "Total should be positive value")
     @NotNull(message = "Payment Details fo travel package cannot be null")
     private PaymentDetails paymentDetails;
     @Nullable

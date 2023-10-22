@@ -10,7 +10,7 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>guide-service</artifactId>
-
+    <name>guide-service</name>
     <properties>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <java.version>17</java.version>

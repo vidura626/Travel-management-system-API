@@ -19,9 +19,7 @@ import java.io.Serializable;
 @Data
 @Builder
 public class RequestTravelDto implements Serializable {
-    @Min(value = 1, message = "Hotel Id cannot be less than 1")
-    @Max(value = 9999999999L, message = "Hotel Id cannot be greater than 9999999999")
-    @Pattern(regexp = "^(NEXT)[0-9]{1,}$")
+    @Pattern(regexp = "^(NEXT_)[0-9]{1,}$")
     private String packageID;
     @NotNull(message = "Package Detail of travel package cannot be null")
     private String packageInfo;
@@ -40,7 +38,6 @@ public class RequestTravelDto implements Serializable {
     private Boolean withPets;
     @Nullable
     private PackageValueDetailsDto packageValueDetails;
-    @Min(value = 0, message = "Total should be positive value")
     @NotNull(message = "Payment Details fo travel package cannot be null")
     private PaymentDetailsDto paymentDetails;
     @Nullable

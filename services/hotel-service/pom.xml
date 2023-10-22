@@ -10,8 +10,8 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>hotel-service</artifactId>
-    <version>0.0.1.0</version>
     <name>hotel-service</name>
+    <version>0.0.1.0</version>
     <description>Hotel microservice</description>
     <properties>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>

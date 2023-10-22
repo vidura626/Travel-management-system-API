@@ -11,9 +11,9 @@
     </parent>
 
     <artifactId>travel-service</artifactId>
-    <version>0.0.1.0</version>
     <name>travel-service</name>
-    <description>Hotel microservice</description>
+    <version>0.0.1.0</version>
+    <description>Travel microservice</description>
     <properties>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <java.version>17</java.version>

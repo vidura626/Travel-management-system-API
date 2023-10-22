@@ -1,6 +1,7 @@
 package lk.ijse.travelservice.service.impl;
 
 import lk.ijse.travelservice.dto.RequestTravelDto;
+import lk.ijse.travelservice.dto.ResponseTravelDto;
 import lk.ijse.travelservice.entity.Travel;
 import lk.ijse.travelservice.exception.InvalidTravelDetailException;
 import lk.ijse.travelservice.exception.NotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,7 +28,7 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public List<RequestTravelDto> findTravelsByPackageName(String packageName) {
+    public List<ResponseTravelDto> findTravelsByPackageName(String packageName) {
         return mapper.toDto(repository.findTravelPackagesByPackageID(packageName));
     }
 
@@ -46,25 +48,47 @@ public class TravelServiceImpl implements TravelService {
             throw new NotFoundException("Package not found");
         } else {
 //            TODO:check role( user or admin )
-//           TODO: Check booking time
+//             If user -> Check booking time (Only can update some details within 48 hours after booking time)
+//             If admin -> ok
 
             Travel travel = validateDetailsOfTravelDto(requestTravelDto);
             if (travel != null) {
-//                TODO: If cancel hotel add cancellation fee to travel package
-//                TODO: If change check about pets and validate
-                return repository.save(mapper.toEntity(requestTravelDto)).getPackageID();
+//                TODO: If cancel hotel : add cancellation fee to travel package
+//                                        check about pets and validate
+                return repository.save(travel).getPackageID();
             }
         }
         return null;
     }
 
+    @Override
+    public List<ResponseTravelDto> getAllTravels() {
+        return mapper.toResponseDto(repository.findAll());
+    }
+
+    @Override
+    public ResponseTravelDto deleteTravel(String packageId) {
+        Optional<Travel> byId = repository.findById(packageId);
+        if (byId.isEmpty()) {
+            throw new NotFoundException("Package not found");
+        } else {
+//           TODO:check role( user or admin )
+//            Check booking time (Only can delete (cancel) package within 48 hours after booking time)
+//            If user -> If time is out of 48 hours -> throw TimeOutException("Booking time is out of 48 hours")
+//            If admin -> ok
+//            If cancel hotel : add cancellation fee to total of response
+            repository.delete(byId.get());
+            return mapper.toDto(byId.get());
+        }
+    }
+
     private Travel validateDetailsOfTravelDto(RequestTravelDto requestTravelDto) {
 //        TODO: 1 Check package isExist and correct
-//        TODO: 2 Check vehicle isExist and correct
-//        TODO: 3 Check guide isExist and correct (If needGuide is > 0)
-//        TODO: 4 Check hotel isExist and correct
+//              2 Check vehicle isExist and correct
+//              3 Check guide isExist and correct (If needGuide is > 0)
+//              4 Check hotel isExist and correct
 
 //        If there some error throw InvalidTravelDetailException and return null
-        return null;
+        throw new InvalidTravelDetailException("Invalid Travel Details");
     }
 }

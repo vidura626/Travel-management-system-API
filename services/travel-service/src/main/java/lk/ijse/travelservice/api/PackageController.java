@@ -3,6 +3,7 @@ package lk.ijse.travelservice.api;
 import jakarta.validation.Valid;
 import lk.ijse.travelservice.dto.PackageDto;
 import lk.ijse.travelservice.dto.RequestTravelDto;
+import lk.ijse.travelservice.dto.ResponseTravelDto;
 import lk.ijse.travelservice.service.PackageService;
 import lk.ijse.travelservice.service.TravelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class PackageController {
     }
 
     @GetMapping(path = "/alltravels/{packageName}")
-    public ResponseEntity<List<RequestTravelDto>> getTravelsByPackageName(
+    public ResponseEntity<List<ResponseTravelDto>> getTravelsByPackageName(
             @PathVariable("packageName") String packageName) {
         return ResponseEntity.ok(travelService.findTravelsByPackageName(packageName));
     }

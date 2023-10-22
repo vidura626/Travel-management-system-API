@@ -27,14 +27,14 @@ public class RequestDto {
     @NotNull(message = "Date of Birth cannot be null")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dob;
-    @NotNull(message = "Profile Picture cannot be null or blank")
+    @NotNull(message = "Guide Image cannot be null or blank")
     private MultipartFile guideImage;
     @Pattern(message = "NIC or Passport is present in invalid format",
             regexp = "^(?:[0-9]{9}[xXvV]|[0-9]{12}|[A-Z][0-9]{8})$")
     private String nicOrPassport;
-    @NotNull(message = "Profile Picture cannot be null")
+    @NotNull(message = "Nic or Passport Front image cannot be null")
     private MultipartFile frontImg;
-    @NotNull(message = "Profile Picture cannot be null")
+    @NotNull(message = "Nic or Passport Back image cannot be null")
     private MultipartFile backImg;
     @NotBlank(message = "Address cannot be null or blank")
     private String address;

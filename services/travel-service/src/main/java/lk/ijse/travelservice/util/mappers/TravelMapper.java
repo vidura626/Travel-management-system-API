@@ -1,10 +1,12 @@
 package lk.ijse.travelservice.util.mappers;
 
 import lk.ijse.travelservice.dto.RequestTravelDto;
+import lk.ijse.travelservice.dto.ResponseTravelDto;
 import lk.ijse.travelservice.dto.embedded.*;
 import lk.ijse.travelservice.entity.Travel;
 import lk.ijse.travelservice.entity.embedded.*;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -14,12 +16,13 @@ import java.util.List;
 public interface TravelMapper {
     TravelMapper travelMapper = Mappers.getMapper(TravelMapper.class);
 
-    List<RequestTravelDto> toDto(List<Travel> entity);
+    List<ResponseTravelDto> toDto(List<Travel> entity);
 
-    List<Travel> toEntity(List<RequestTravelDto> dto);
+//    List<Travel> toEntity(List<RequestTravelDto> dto);
 
-    RequestTravelDto toDto(Travel entity);
+    ResponseTravelDto toDto(Travel entity);
 
+    @Mapping(target = "packageInfo.packageName", source = "packageInfo")
     Travel toEntity(RequestTravelDto dto);
 
     TravelDurationDto toDto(TravelDuration entity);
@@ -49,4 +52,5 @@ public interface TravelMapper {
     PaymentDetailsDto toDto(PaymentDetails entity);
     PaymentDetails toEntity(PaymentDetailsDto dto);
 
+    List<ResponseTravelDto> toResponseDto(List<Travel> all);
 }
