@@ -44,4 +44,6 @@ public class RequestDto {
     private String contact;
     @NotBlank(message = "Experience cannot be null or blank")
     private String experience;
+    @Positive(message = "Day fee should be positive")
+    private double dayValue;
 }

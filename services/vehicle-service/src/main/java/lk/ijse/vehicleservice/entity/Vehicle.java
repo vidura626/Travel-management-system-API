@@ -2,6 +2,7 @@ package lk.ijse.vehicleservice.entity;
 
 import jakarta.validation.constraints.*;
 import lk.ijse.vehicleservice.entity.embedded.Driver;
+import lk.ijse.vehicleservice.entity.embedded.VehicleFee;
 import lk.ijse.vehicleservice.entity.embedded.VehicleImages;
 import lk.ijse.vehicleservice.util.constants.FuelType;
 import lombok.AllArgsConstructor;
@@ -47,5 +48,6 @@ public class Vehicle {
     private String vehicleType;
     @NotBlank(message = "Vehicle category cannot be blank")
     private String vehicleCategory;
-
+    @NotNull(message = "Vehicle fee cannot be null or empty")
+    private VehicleFee fee;
 }

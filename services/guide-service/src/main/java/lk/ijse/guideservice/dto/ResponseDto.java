@@ -3,7 +3,6 @@ package lk.ijse.guideservice.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 import lk.ijse.guideservice.dto.embedded.NICorPassportDto;
-import lk.ijse.guideservice.entity.embedded.NICorPassport;
 import lk.ijse.guideservice.util.constants.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,4 +40,6 @@ public class ResponseDto {
     private String contact;
     @NotBlank(message = "Experience cannot be null or blank")
     private String experience;
+    @Positive(message = "Day fee should be positive")
+    private double dayValue;
 }

@@ -1,10 +1,10 @@
 package lk.ijse.vehicleservice.dto;
 
+import lk.ijse.vehicleservice.dto.embedded.VehicleFeeDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,4 +27,5 @@ public class ResponseDto {
     private String rearImg;
     private String vehicleType;
     private String category;
+    private VehicleFeeDto fee;
 }

@@ -1,6 +1,7 @@
 package lk.ijse.vehicleservice.dto;
 
 import jakarta.validation.constraints.*;
+import lk.ijse.vehicleservice.entity.embedded.VehicleFee;
 import lk.ijse.vehicleservice.util.constants.FuelType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,4 +50,8 @@ public class RequestDto {
     private String vehicleType;
     @NotBlank(message = "Vehicle category cannot be blank")
     private String vehicleCategory;
+    @Positive(message = "Day fee should be positive")
+    private double feeForDay;
+    @Positive(message = "1KM fee should be positive")
+    private double feeFor1km;
 }

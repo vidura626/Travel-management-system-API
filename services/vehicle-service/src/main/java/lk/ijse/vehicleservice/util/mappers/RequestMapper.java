@@ -25,6 +25,8 @@ public interface RequestMapper {
     @Mapping(target = "images.frontImg", source = "frontImg")
     @Mapping(target = "images.backImg", source = "backImg")
     @Mapping(target = "images.rearImg", source = "rearImg")
+    @Mapping(target = "fee.feeForDay", source = "feeForDay")
+    @Mapping(target = "fee.feeFor1km", source = "feeFor1km")
     @Mapping(target = "fuelType", expression = "java(lk.ijse.vehicleservice.util.constants.FuelType.valueOf(requestDto.getFuelType().toString().toUpperCase()))")
     Vehicle requestDtoToVehicle(RequestDto requestDto) throws RequestDtoValidationException;
 
