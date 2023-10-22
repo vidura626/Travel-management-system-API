@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @Data
 @Builder
-public class PackageInfoDto {
+public class PackageDto {
     @NotBlank(message = "Package name of package info cannot be blank")
     private String packageName;
     @NotNull(message = "Hotel Ids of package info cannot be blank")

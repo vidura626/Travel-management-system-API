@@ -1,10 +1,10 @@
 package lk.ijse.travelservice.api;
 
 import jakarta.validation.Valid;
-import lk.ijse.travelservice.dto.PackageInfoDto;
-import lk.ijse.travelservice.dto.TravelPackageDto;
+import lk.ijse.travelservice.dto.PackageDto;
+import lk.ijse.travelservice.dto.RequestTravelDto;
 import lk.ijse.travelservice.service.PackageService;
-import lk.ijse.travelservice.service.TravelPackageService;
+import lk.ijse.travelservice.service.TravelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,31 +18,31 @@ import java.util.List;
 public class PackageController {
 
     private final PackageService packageService;
-    private final TravelPackageService travelPackageService;
+    private final TravelService travelService;
 
     @Autowired
-    public PackageController(PackageService packageService, TravelPackageService travelPackageService) {
+    public PackageController(PackageService packageService, TravelService travelService) {
         this.packageService = packageService;
-        this.travelPackageService = travelPackageService;
+        this.travelService = travelService;
     }
 
     //    Create package
     @PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createPackage(@RequestBody @Valid PackageInfoDto packageInfo) {
+    public ResponseEntity<String> createPackage(@RequestBody @Valid PackageDto packageInfo) {
         String packageId = packageService.createNewPackage(packageInfo);
         return ResponseEntity.ok(packageId);
     }
 
     //    Update existing package
     @PutMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updatePackage(@RequestBody @Valid PackageInfoDto packageInfo) {
+    public ResponseEntity<String> updatePackage(@RequestBody @Valid PackageDto packageInfo) {
         String packageId = packageService.updateExistingPackage(packageInfo);
         return ResponseEntity.ok(packageId);
     }
 
     @GetMapping(path = "/all")
-    public ResponseEntity<List<PackageInfoDto>> getAllPackages() {
-        List<PackageInfoDto> allPackages = packageService.getAllPackages();
+    public ResponseEntity<List<PackageDto>> getAllPackages() {
+        List<PackageDto> allPackages = packageService.getAllPackages();
         return ResponseEntity.ok(allPackages);
     }
 
@@ -53,13 +53,13 @@ public class PackageController {
     }
 
     @GetMapping(path = "/alltravels/{packageName}")
-    public ResponseEntity<List<TravelPackageDto>> getTravelsByPackageName(
+    public ResponseEntity<List<RequestTravelDto>> getTravelsByPackageName(
             @PathVariable("packageName") String packageName) {
-        return ResponseEntity.ok(travelPackageService.findTravelsByPackageName(packageName));
+        return ResponseEntity.ok(travelService.findTravelsByPackageName(packageName));
     }
 
     @GetMapping("/{packageName}")
-    public ResponseEntity<PackageInfoDto> getPackageByPackageName(
+    public ResponseEntity<PackageDto> getPackageByPackageName(
             @PathVariable("packageName") String packageName) {
         return ResponseEntity.ok(packageService.findPackageByPackageName(packageName));
     }

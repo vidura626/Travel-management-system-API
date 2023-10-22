@@ -1,20 +1,18 @@
 package lk.ijse.travelservice.service;
 
-import lk.ijse.travelservice.dto.PackageInfoDto;
-import lk.ijse.travelservice.repository.PackageRepository;
-import org.springframework.stereotype.Service;
+import lk.ijse.travelservice.dto.PackageDto;
 
 import java.util.List;
 
 public interface PackageService {
 
-    String createNewPackage(PackageInfoDto packageInfo);
+    String createNewPackage(PackageDto packageInfo);
 
-    String updateExistingPackage(PackageInfoDto packageInfo);
+    String updateExistingPackage(PackageDto packageInfo);
 
-    List<PackageInfoDto> getAllPackages();
+    List<PackageDto> getAllPackages();
 
     String deleteExistingPackage(String packageName);
 
-    PackageInfoDto findPackageByPackageName(String packageName);
+    PackageDto findPackageByPackageName(String packageName);
 }

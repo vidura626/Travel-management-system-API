@@ -18,13 +18,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Builder
-public class TravelPackageDto implements Serializable {
+public class ResponseTravelDto implements Serializable {
     @Min(value = 1, message = "Hotel Id cannot be less than 1")
     @Max(value = 9999999999L, message = "Hotel Id cannot be greater than 9999999999")
     @Pattern(regexp = "^(NEXT)[0-9]{1,}$")
     private String packageID;
     @NotNull(message = "Package Detail of travel package cannot be null")
-    private PackageInfoDto packageInfo;
+    private PackageDto packageInfo;
     @NotNull(message = "Travel Duration of Travel Package cannot be null")
     private TravelDurationDto travelDuration;
     @Min(value = 0, message = "User id should be positive")
@@ -37,7 +37,7 @@ public class TravelPackageDto implements Serializable {
     private HotelDetailsDto hotelDetails;
     @NotNull(message = "MemberCount of Travel Package cannot be null")
     private MemberCountDto count;
-    private boolean withPets;
+    private Boolean withPets;
     @Min(value = 0, message = "Min value is 0 that represent no need guide for a package")
     private Integer needGuide;
     @Nullable

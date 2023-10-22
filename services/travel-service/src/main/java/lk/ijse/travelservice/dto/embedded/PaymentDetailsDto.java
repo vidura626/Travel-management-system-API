@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
@@ -18,4 +20,5 @@ public class PaymentDetailsDto {
     private double paidFee;
     @Min(value = 0, message = "TotalFee Fee of payment details should be positive")
     private double totalFee;
+    private Date date;
 }

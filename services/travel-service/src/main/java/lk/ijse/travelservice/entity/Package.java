@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Data
 @Builder
 @Entity
-public class PackageInfo implements Serializable {
+public class Package implements Serializable {
     @Id
     @NotBlank(message = "Package name of package info cannot be blank")
     private String packageName;

@@ -1,7 +1,7 @@
 package lk.ijse.travelservice.util.mappers;
 
-import lk.ijse.travelservice.dto.PackageInfoDto;
-import lk.ijse.travelservice.entity.PackageInfo;
+import lk.ijse.travelservice.dto.PackageDto;
+import lk.ijse.travelservice.entity.Package;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -20,11 +20,11 @@ public interface PackageMapper {
         return string.split(",");
     }
 
-    PackageInfo toEntity(PackageInfoDto dto);
+    Package toEntity(PackageDto dto);
 
-    PackageInfoDto toDto(PackageInfo entity);
+    PackageDto toDto(Package entity);
 
-    List<PackageInfoDto> toDto(List<PackageInfo> entity);
+    List<PackageDto> toDto(List<Package> entity);
 
-    List<PackageInfo> toEntity(List<PackageInfoDto> dto);
+    List<Package> toEntity(List<PackageDto> dto);
 }

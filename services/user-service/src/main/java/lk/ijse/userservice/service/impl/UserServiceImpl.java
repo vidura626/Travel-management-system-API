@@ -42,6 +42,13 @@ public class UserServiceImpl implements UserService {
         if (userByUsername == null) {
             throw new NotFoundException("User not found. Username : " + user.getUsername());
         } else {
+//            TODO: 1 Check the user has bookings at this time
+//             (Only user can update his email and contact details within 48 hours after booking a package)
+
+
+//            TODO: 2 Check the user has bookings at this time
+//             (User cannot update name, nic, address while booking a package)
+//             (User can update password and profile picture any time)
             if (user.getPassword() != null) {
             } else {
                 user.setPassword(userByUsername.getPassword());
