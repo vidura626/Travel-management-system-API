@@ -1,8 +1,8 @@
 package lk.ijse.travelservice.dto.vehicle;
 
 import jakarta.validation.constraints.*;
-import lk.ijse.travelservice.dto.vehicle.embedded.VehicleFee;
 import lk.ijse.travelservice.dto.vehicle.embedded.Driver;
+import lk.ijse.travelservice.dto.vehicle.embedded.VehicleFee;
 import lk.ijse.travelservice.dto.vehicle.embedded.VehicleImages;
 import lk.ijse.travelservice.util.constants.FuelType;
 import lombok.AllArgsConstructor;

@@ -1,15 +1,11 @@
-package lk.ijse.travelservice.entity;
+package lk.ijse.travelservice.dto;
 
 import com.mongodb.lang.Nullable;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lk.ijse.travelservice.entity.embedded.*;
+import lk.ijse.travelservice.dto.embedded.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,40 +18,33 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Builder
-@Entity
-public class TravelPackage implements Serializable {
-    @Id
+public class TravelPackageDto implements Serializable {
     @Min(value = 1, message = "Hotel Id cannot be less than 1")
     @Max(value = 9999999999L, message = "Hotel Id cannot be greater than 9999999999")
     @Pattern(regexp = "^(NEXT)[0-9]{1,}$")
     private String packageID;
-    @ManyToOne
     @NotNull(message = "Package Detail of travel package cannot be null")
-    private PackageInfo packageInfo;
-    @Embedded
+    private PackageInfoDto packageInfo;
     @NotNull(message = "Travel Duration of Travel Package cannot be null")
-    private TravelDuration travelDuration;
+    private TravelDurationDto travelDuration;
     @Min(value = 0, message = "User id should be positive")
     private long userID;
-    @Embedded
     @NotNull(message = "Vehicle Details of Travel Package cannot be null")
-    private VehicleDetails vehicleDetails;
-    @Embedded
+    private VehicleDetailsDto vehicleDetails;
     @Nullable
-    private GuideDetails guideDetails;
+    private GuideDetailsDto guideDetails;
     @NotNull(message = "Hotel Details of travel package cannot be null or empty")
-    private HotelDetails hotelDetails;
+    private HotelDetailsDto hotelDetails;
     @NotNull(message = "MemberCount of Travel Package cannot be null")
-    private MemberCount count;
+    private MemberCountDto count;
     private boolean withPets;
     @Min(value = 0, message = "Min value is 0 that represent no need guide for a package")
     private Integer needGuide;
-    @Embedded
     @Nullable
-    private PackageValueDetails packageValueDetails;
+    private PackageValueDetailsDto packageValueDetails;
     @Min(value = 0, message = "Total should be positive value")
     @NotNull(message = "Payment Details fo travel package cannot be null")
-    private PaymentDetails paymentDetails;
+    private PaymentDetailsDto paymentDetails;
     @Nullable
     private String remarks;
 }

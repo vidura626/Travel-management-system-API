@@ -1,6 +1,7 @@
 package lk.ijse.travelservice.advice;
 
 import lk.ijse.travelservice.exception.AlreadyExistsException;
+import lk.ijse.travelservice.exception.CannotDeleteException;
 import lk.ijse.travelservice.exception.RequestDtoValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleInvalidArgument(MethodArgumentNotValidException ex) {
