@@ -37,7 +37,7 @@ public class TravelController {
         return ResponseEntity.ok().body(travelService.getAllTravels());
     }
 
-    @GetMapping(path = "/all", params = "packageId")
+    @GetMapping(params = "packageId")
     public ResponseEntity<ResponseTravelDto> deleteTravelByPackageId(@RequestParam("packageId") String packageId) {
         return ResponseEntity.ok().body(travelService.deleteTravel(packageId));
     }

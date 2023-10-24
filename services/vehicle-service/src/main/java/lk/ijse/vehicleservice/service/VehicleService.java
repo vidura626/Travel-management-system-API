@@ -16,4 +16,5 @@ public interface VehicleService {
 
     public List<ResponseDto> findAllVehicles();
 
+    ResponseDto findById(long vehicleId);
 }

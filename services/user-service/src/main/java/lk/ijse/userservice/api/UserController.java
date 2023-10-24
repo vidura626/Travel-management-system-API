@@ -1,7 +1,6 @@
 package lk.ijse.userservice.api;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import lk.ijse.userservice.dto.RequestDto;
 import lk.ijse.userservice.dto.ResponseDto;
 import lk.ijse.userservice.service.UserService;
@@ -51,6 +50,12 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ResponseDto>> getAllUsers() {
         return ResponseEntity.ok().body(userService.findAllUsers());
+    }
+
+    @GetMapping(path = "/{username}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDto> getUserByUsername(@PathVariable(name = "username") String username) {
+        return ResponseEntity.ok().body(userService.findUserByUsername(username));
     }
 
     @DeleteMapping(path = "/delete/{username}",

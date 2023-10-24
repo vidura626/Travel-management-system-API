@@ -42,13 +42,22 @@ public class GuideController {
         return ResponseEntity.ok().body(guideService.findAllGuides());
     }
 
-    @DeleteMapping(path = "/delete/{username}",
+    @DeleteMapping(path = "/delete/{guideId}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDto> deleteGuide(@PathVariable(name = "username") String username) {
-        if (username == null) {
+    public ResponseEntity<ResponseDto> deleteGuide(@PathVariable(name = "guideId") String guideId) {
+        if (guideId == null) {
             throw new NullPointerException("Username cannot be null");
         }
-        guideService.deleteGuide(Long.parseLong(username));
+        guideService.deleteGuide(Long.parseLong(guideId));
         return ResponseEntity.ok().body(null);
+    }
+
+    @GetMapping(path = "/{guideId}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDto> getGuideById(@PathVariable(name = "guideId") String guideId) {
+        if (guideId == null) {
+            throw new NullPointerException("Username cannot be null");
+        }
+        return ResponseEntity.ok().body(guideService.findGuideByID(Long.parseLong(guideId)));
     }
 }

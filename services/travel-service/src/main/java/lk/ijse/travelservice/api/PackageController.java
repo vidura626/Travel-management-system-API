@@ -2,7 +2,6 @@ package lk.ijse.travelservice.api;
 
 import jakarta.validation.Valid;
 import lk.ijse.travelservice.dto.PackageDto;
-import lk.ijse.travelservice.dto.RequestTravelDto;
 import lk.ijse.travelservice.dto.ResponseTravelDto;
 import lk.ijse.travelservice.service.PackageService;
 import lk.ijse.travelservice.service.TravelService;

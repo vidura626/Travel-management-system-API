@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/user
+  application:
+    name: user-service
+server:
+  port: 8081
+
+eureka:
+  instance:
+    hostname: localhost

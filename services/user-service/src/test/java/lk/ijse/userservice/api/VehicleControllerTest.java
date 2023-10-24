@@ -1,7 +1,5 @@
 package lk.ijse.userservice.api;
 
-import lk.ijse.userservice.util.mappers.RequestMapper;
-import lk.ijse.userservice.util.validator.RequestDtoValidator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

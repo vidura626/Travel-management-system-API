@@ -1,7 +1,6 @@
 package lk.ijse.travelservice.advice;
 
 import lk.ijse.travelservice.exception.AlreadyExistsException;
-import lk.ijse.travelservice.exception.CannotDeleteException;
 import lk.ijse.travelservice.exception.RequestDtoValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;

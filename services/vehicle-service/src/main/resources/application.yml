@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: vehicle-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/vehicle
+server:
+  port: 8092
+
+eureka:
+  instance:
+    hostname: localhost

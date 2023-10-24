@@ -1,6 +1,5 @@
 package lk.ijse.hotelservice.dto.embedded;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

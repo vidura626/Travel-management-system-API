@@ -1,7 +1,6 @@
 package lk.ijse.vehicleservice.dto;
 
 import jakarta.validation.constraints.*;
-import lk.ijse.vehicleservice.entity.embedded.VehicleFee;
 import lk.ijse.vehicleservice.util.constants.FuelType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

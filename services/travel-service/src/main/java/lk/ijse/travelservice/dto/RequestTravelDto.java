@@ -1,7 +1,6 @@
 package lk.ijse.travelservice.dto;
 
 import com.mongodb.lang.Nullable;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

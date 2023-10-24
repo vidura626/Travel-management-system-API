@@ -1,11 +1,8 @@
 package lk.ijse.userservice.util.validator;
 
-import jdk.jfr.Name;
 import lk.ijse.userservice.exception.RequestDtoValidationException;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.control.MappingControls;
 import org.springframework.stereotype.Component;
 
 @Component

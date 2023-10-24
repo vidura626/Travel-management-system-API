@@ -11,6 +11,7 @@ import lk.ijse.travelservice.util.mappers.TravelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,10 +22,12 @@ public class TravelServiceImpl implements TravelService {
     private final TravelRepository repository;
     private final TravelMapper mapper;
 
+    private WebClient.Builder webClient;
     @Autowired
-    public TravelServiceImpl(TravelRepository repository, TravelMapper mapper) {
+    public TravelServiceImpl(TravelRepository repository, TravelMapper mapper, WebClient.Builder webClient) {
         this.repository = repository;
         this.mapper = mapper;
+        this.webClient = webClient;
     }
 
     @Override
@@ -87,6 +90,13 @@ public class TravelServiceImpl implements TravelService {
 //              2 Check vehicle isExist and correct
 //              3 Check guide isExist and correct (If needGuide is > 0)
 //              4 Check hotel isExist and correct
+
+//        webClient.get()
+//                .uri("http://localhost:8082/travel")
+//                .retrieve()
+//                .bodyToMono(String.class)
+//                .block();
+
 
 //        If there some error throw InvalidTravelDetailException and return null
         throw new InvalidTravelDetailException("Invalid Travel Details");

@@ -1,6 +1,5 @@
 package lk.ijse.vehicleservice.util.mappers;
 
-import jakarta.validation.Valid;
 import lk.ijse.vehicleservice.dto.RequestDto;
 import lk.ijse.vehicleservice.dto.ResponseDto;
 import lk.ijse.vehicleservice.entity.Vehicle;

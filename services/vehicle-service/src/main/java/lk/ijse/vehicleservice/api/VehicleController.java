@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/vehicle")
+@RequestMapping("/api/vehicle")
 public class VehicleController {
     private final VehicleService vehicleService;
 
@@ -39,6 +39,12 @@ public class VehicleController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ResponseDto>> getAllVehicles() {
         return ResponseEntity.ok().body(vehicleService.findAllVehicles());
+    }
+
+    @GetMapping(params = "vehicleId",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDto> getVehicleById(@RequestParam(name = "vehicleId") long vehicleId) {
+        return ResponseEntity.ok().body(vehicleService.findById(vehicleId));
     }
 
     @DeleteMapping(path = "/delete/{vehicleId}",

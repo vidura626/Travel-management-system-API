@@ -1,7 +1,6 @@
 package lk.ijse.userservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mongodb.lang.Nullable;
 import jakarta.validation.constraints.*;
 import lk.ijse.userservice.entity.embedded.NICorPassport;
 import lk.ijse.userservice.util.constants.Gender;
@@ -9,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

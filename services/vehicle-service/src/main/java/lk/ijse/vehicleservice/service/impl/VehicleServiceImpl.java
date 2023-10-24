@@ -84,4 +84,14 @@ public class VehicleServiceImpl implements VehicleService {
                 .map(requestMapper::userToResponseDto)
                 .collect(toList());
     }
+
+    @Override
+    public ResponseDto findById(long vehicleId) {
+        Vehicle vehicle = vehicleRepository.findVehicleByVehicleId(vehicleId);
+        if (vehicle == null) {
+            throw new NotFoundException("Vehicle not found. Vehicle Id : " + vehicleId);
+        } else {
+            return requestMapper.userToResponseDto(vehicle);
+        }
+    }
 }
