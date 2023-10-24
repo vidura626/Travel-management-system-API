@@ -5,6 +5,7 @@ import lk.ijse.hotelservice.dto.RequestDto;
 import lk.ijse.hotelservice.dto.ResponseDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface HotelService {
     public void registerHotel(RequestDto vehicle);
@@ -18,4 +19,6 @@ public interface HotelService {
     public List<ResponseDto> findAllHotels();
 
     public List<ResponseDto> findHotelsByHotelCategory(int hotelCategory);
+
+    Map<Long, String> checkHotelsByIds(List<Long> hotelIds);
 }

@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("api/hotel")
@@ -52,5 +55,11 @@ public class HotelController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDto> getHotelById(@PathVariable(name = "hotelId") long hotelId) {
         return ResponseEntity.ok().body(hotelService.findHotelByHotelId(hotelId));
+    }
+
+    @GetMapping(path = "/checkHotelsByIds", params = "hotelId",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<Long, String>> checkHotelsByIds(@RequestParam(name = "hotelId") List<String> hotelId) {
+        return ResponseEntity.ok().body(hotelService.checkHotelsByIds(hotelId.stream().map(Long::parseLong).collect(toList())));
     }
 }

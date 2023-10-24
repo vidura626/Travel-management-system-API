@@ -32,7 +32,7 @@ public class TravelController {
         return ResponseEntity.ok().body(travelService.updateBooking(requestTravelDto));
     }
 
-    @GetMapping(path = "/all", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/all")
     public ResponseEntity<List<ResponseTravelDto>> getAllTravels() {
         return ResponseEntity.ok().body(travelService.getAllTravels());
     }

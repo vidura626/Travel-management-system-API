@@ -15,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 @Slf4j
 @Service
@@ -83,5 +85,12 @@ public class HotelServiceImpl implements HotelService {
                 .stream()
                 .map(requestMapper::hotelToResponseDto)
                 .collect(toList());
+    }
+
+    @Override
+    public Map<Long, String> checkHotelsByIds(List<Long> hotelIds) {
+        List<Hotel> byHotelIdIn = hotelRepository.findByHotelIdIn(hotelIds);
+        return byHotelIdIn.stream()
+                .collect(toMap(Hotel::getHotelId, Hotel::getHotelName));
     }
 }
