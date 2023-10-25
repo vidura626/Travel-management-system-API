@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -54,6 +55,6 @@ public class Travel implements Serializable {
     private PaymentDetails paymentDetails;
     @Nullable
     private String remarks;
-    @CreationTimestamp
+    @CreationTimestamp(source = SourceType.VM)
     private Date bookingDate;
 }

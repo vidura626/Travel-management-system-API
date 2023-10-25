@@ -50,6 +50,7 @@ public interface TravelMapper {
     PackageValueDetails toEntity(PackageValueDetailsDto dto);
 
     PaymentDetailsDto toDto(PaymentDetails entity);
+
     PaymentDetails toEntity(PaymentDetailsDto dto);
 
     List<ResponseTravelDto> toResponseDto(List<Travel> all);
