@@ -43,7 +43,7 @@ public class PackageServiceImpl implements PackageService {
             throw new AlreadyExistsException("Package already exists : " + packageInfo.getPackageName());
         } else {
 
-//            Check Hotels
+//            Check Hotels and Vehicles
             if (checkHotels(packageInfo) && checkVehicles(packageInfo)) {
                 Package packageEntity = mapper.toEntity(packageInfo);
                 repository.save(packageEntity);

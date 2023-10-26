@@ -41,10 +41,16 @@ public class TravelController {
 
     @GetMapping(params = "packageId")
     public ResponseEntity<ResponseTravelDto> deleteTravelByPackageId(@RequestParam("packageId") String packageId) {
-        return ResponseEntity.ok().body(travelService.deleteTravel(packageId));
+        return ResponseEntity.ok().body(travelService.findTravelByPackageId(packageId));
     }
     @GetMapping(path = "hasActiveTravels")
     public ResponseEntity<Map<TravelStatus, Boolean>> hasActiveTravels(@RequestParam("userId") String userId) {
         return ResponseEntity.ok().body(travelService.hasActiveTravels(Long.parseLong(userId)));
+    }
+
+    @DeleteMapping(path = "deleteByUserId/{userId}")
+    public ResponseEntity<Boolean> deleteByUserId(@PathVariable("userId") String userId) {
+        travelService.deleteByUserId(Long.parseLong(userId));
+        return ResponseEntity.ok().body(true);
     }
 }

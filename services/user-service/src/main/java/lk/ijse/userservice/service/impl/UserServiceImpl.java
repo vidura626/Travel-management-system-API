@@ -108,7 +108,17 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new NotFoundException("User not found. Username : " + username);
         } else {
-            userRepository.delete(user);
+
+            Boolean isDeleted = webClient.build().delete()
+                    .uri("lb://travel-service/api/travels/deleteByUserId/" + user.getUserId())
+                    .retrieve()
+                    .bodyToMono(Boolean.class)
+                    .block();
+
+            if (Boolean.TRUE.equals(isDeleted)) {
+                userRepository.delete(user);
+            } else throw new RuntimeException("Unknown error. Username : " + username);
+
             return requestMapper.userToResponseDto(user);
         }
     }

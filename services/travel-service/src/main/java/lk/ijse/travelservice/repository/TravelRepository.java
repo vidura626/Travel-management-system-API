@@ -10,4 +10,6 @@ public interface TravelRepository extends JpaRepository<Travel, String> {
     public List<Travel> findTravelPackagesByPackageID(String packageId);
     public List<Travel> findTravelsByUserID(long userId);
 
+    public void deleteTravelsByUserID(long userId);
+
 }

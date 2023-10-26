@@ -22,22 +22,20 @@ public class RequestDto {
             regexp = "^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)$")
     private String name;
     @Pattern(message = "Gender should be male or female",
-            regexp = "^(male|female)$")
+            regexp = "^(male|female)$", flags = Pattern.Flag.CASE_INSENSITIVE)
     private String gender;
     @NotNull(message = "Date of Birth cannot be null")
-    @Pattern(message = "Date of Birth should be in dd/mm/yyyy format",
-            regexp = "^((0[1-9]|[12]\\d|3[01])/(0[1-9]|1[012])/((19|20)\\d\\d))$")
     private Date dob;
-    @NotBlank(message = "Profile Picture cannot be null or blank")
+    @NotNull(message = "Profile Picture cannot be null or blank")
     private MultipartFile proPic;
     @NotNull(message = "Remarks cannot be null")
     private String remarks;
     @Pattern(message = "NIC or Passport is present in invalid format",
             regexp = "^(?:[0-9]{9}[xXvV]|[0-9]{12}|[A-Z][0-9]{8})$")
     private String nicOrPassport;
-    @NotBlank(message = "Profile Picture cannot be null or blank")
+    @NotNull(message = "Profile Picture cannot be null or blank")
     private MultipartFile frontImg;
-    @NotBlank(message = "Profile Picture cannot be null or blank")
+    @NotNull(message = "Profile Picture cannot be null or blank")
     private MultipartFile backImg;
     private Date regDate;
     @Pattern(message = "Username should contain only letters and numbers",

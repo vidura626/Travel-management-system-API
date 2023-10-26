@@ -74,6 +74,7 @@ public class TravelServiceImpl implements TravelService {
             if (canModifyBookings(travelByIdOptional.get())) {
                 Travel travel = validateDetailsOfTravelDto(requestTravelDto, travelByIdOptional.get());
                 if (travel != null) {
+                    travel.setBookingDate(travelByIdOptional.get().getBookingDate());
                     return repository.save(travel).getPackageID();
                 }
             } else throw new TimeOutException("Booking time is out of 48 hours");
@@ -83,7 +84,10 @@ public class TravelServiceImpl implements TravelService {
 
     private boolean canModifyBookings(Travel travel) {
         Date bookingDate = travel.getBookingDate();
-        return bookingDate.compareTo(new Date(bookingDate.getTime() + 48 * 60 * 60 * 1000)) <= 0;
+        Date date = new Date();
+        date.setTime(bookingDate.getTime() + 48 * 60 * 60 * 1000);
+        int i = new Date().compareTo(date);
+        return i <= 0;
     }
 
     @Override
@@ -120,7 +124,21 @@ public class TravelServiceImpl implements TravelService {
     public boolean checkActiveTravels(Travel travel) {
         Date startDate = travel.getTravelDuration().getStartDate();
         Date endDate = travel.getTravelDuration().getEndDate();
-        return true;
+        return new Date().compareTo(startDate) >= 0 && new Date().compareTo(endDate) <= 0;
+    }
+
+    @Override
+    public ResponseTravelDto findTravelByPackageId(String packageId) {
+        Optional<Travel> byId = repository.findById(packageId);
+        if (byId.isEmpty()) {
+            throw new NotFoundException("Booking is not found");
+        }
+        return travelMapper.toDto(byId.get());
+    }
+
+    @Override
+    public void deleteByUserId(long userId) {
+        repository.deleteTravelsByUserID(userId);
     }
 
     private Travel validateDetailsOfTravelDto(RequestTravelDto requestTravelDto) {
@@ -166,10 +184,10 @@ public class TravelServiceImpl implements TravelService {
     }
 
     private Guide validateGuideInfo(RequestTravelDto requestTravelDto, WebClient webFluxClient) {
-        if (requestTravelDto.getGuideDetails() != null && requestTravelDto.getGuideDetails().getGuideId() < 0)
+        if (requestTravelDto.getGuideDetails() == null) return null;
+        if (requestTravelDto.getGuideDetails().getGuideId() < 0)
             throw new InvalidTravelDetailException("Given Guide not found");
         else {
-            assert requestTravelDto.getGuideDetails() != null;
             if (requestTravelDto.getGuideDetails().getGuideId() > 0) {
                 return webFluxClient.get().uri("lb://guide-service/api/guide/" + requestTravelDto.getGuideDetails().getGuideId())
                         .retrieve()

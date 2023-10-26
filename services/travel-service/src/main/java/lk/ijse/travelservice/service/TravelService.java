@@ -22,4 +22,8 @@ public interface TravelService {
     Map<TravelStatus, Boolean> hasActiveTravels(long userId);
 
     boolean checkActiveTravels(Travel travel);
+
+    ResponseTravelDto findTravelByPackageId(String packageId);
+
+    void deleteByUserId(long userId);
 }
