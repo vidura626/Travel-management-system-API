@@ -1,5 +1,6 @@
 package lk.ijse.travelservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mongodb.lang.Nullable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -14,10 +15,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SourceType;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 
 @AllArgsConstructor
@@ -55,6 +55,6 @@ public class Travel implements Serializable {
     private PaymentDetails paymentDetails;
     @Nullable
     private String remarks;
-    @CreationTimestamp(source = SourceType.VM)
+    @CreationTimestamp
     private Date bookingDate;
 }

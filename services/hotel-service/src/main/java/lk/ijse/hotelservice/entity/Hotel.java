@@ -39,4 +39,5 @@ public class Hotel {
     private HotelContact contacts;
     @NotNull(message = "Hotel location cannot be null")
     private HotelLocation location;
+    private Boolean isPetsAllowed;
 }

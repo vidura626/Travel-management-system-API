@@ -36,4 +36,5 @@ public class ResponseDto {
     private HotelContactDto contacts;
     @NotNull(message = "Hotel location cannot be null")
     private HotelLocationDto location;
+    private Boolean isPetsAllowed;
 }

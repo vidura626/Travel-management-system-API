@@ -4,15 +4,19 @@ import lk.ijse.userservice.dto.RequestDto;
 import lk.ijse.userservice.dto.ResponseDto;
 import lk.ijse.userservice.entity.User;
 import lk.ijse.userservice.exception.AlreadyExistsException;
+import lk.ijse.userservice.exception.AlreadyInTravelException;
 import lk.ijse.userservice.exception.NotFoundException;
 import lk.ijse.userservice.repository.UserRepository;
 import lk.ijse.userservice.service.UserService;
 import lk.ijse.userservice.util.constants.Role;
+import lk.ijse.userservice.util.constants.TravelStatus;
 import lk.ijse.userservice.util.mappers.RequestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,11 +24,13 @@ import static java.util.stream.Collectors.toList;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RequestMapper requestMapper;
+    private final WebClient.Builder webClient;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RequestMapper requestMapper) {
+    public UserServiceImpl(UserRepository userRepository, RequestMapper requestMapper, WebClient.Builder webClient) {
         this.userRepository = userRepository;
         this.requestMapper = requestMapper;
+        this.webClient = webClient;
     }
 
     @Override
@@ -37,25 +43,63 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long updateUser(RequestDto user) {
-        User userByUsername = userRepository.findUserByUsername(user.getUsername());
-        if (userByUsername == null) {
-            throw new NotFoundException("User not found. Username : " + user.getUsername());
+    public Long updateUser(RequestDto requestUserUpdateDetails) {
+        User dbUser = userRepository.findUserByUsername(requestUserUpdateDetails.getUsername());
+        if (dbUser == null) {
+            throw new NotFoundException("User not found. Username : " + requestUserUpdateDetails.getUsername());
         } else {
-//            TODO: 1 Check the user has bookings at this time
-//             (Only user can update his email and contact details within 48 hours after booking a package)
+            WebClient webFluxClient = webClient.build();
 
+            Map hasActiveTravels = webFluxClient.get().uri("lb://travel-service/api/travels/hasActiveTravels")
+                    .retrieve()
+                    .bodyToMono(Map.class)
+                    .doOnError(throwable -> {
+                        throw new RuntimeException("Unknown error. Username : " + requestUserUpdateDetails.getUsername());
+                    })
+                    .block();
 
-//            TODO: 2 Check the user has bookings at this time
-//             (User cannot update name, nic, address while booking a package)
-//             (User can update password and profile picture any time)
-            if (user.getPassword() != null) {
+            if (!Boolean.TRUE.equals(hasActiveTravels.get(TravelStatus.ACTIVE_TRAVEL))) {
+//                Only can update email and contact details within 48 hours after booking a package
+                if (requestUserUpdateDetails.getPassword() == null) {
+                    requestUserUpdateDetails.setPassword(dbUser.getPassword());
+                }
+                userRepository.save(requestMapper.requestDtoToUser(requestUserUpdateDetails));
+                return requestUserUpdateDetails.getUserId();
+            } else if (!Boolean.TRUE.equals(hasActiveTravels.get(TravelStatus.BOOKING_TRAVEL))) {
+                checkUpdateInformation(requestUserUpdateDetails, dbUser, TravelStatus.ACTIVE_TRAVEL);
+                userRepository.save(requestMapper.requestDtoToUser(requestUserUpdateDetails));
             } else {
-                user.setPassword(userByUsername.getPassword());
+                checkUpdateInformation(requestUserUpdateDetails, dbUser, TravelStatus.BOOKING_TRAVEL);
+                userRepository.save(requestMapper.requestDtoToUser(requestUserUpdateDetails));
             }
-            userRepository.save(requestMapper.requestDtoToUser(user));
-            return user.getUserId();
         }
+
+        return requestUserUpdateDetails.getUserId();
+    }
+
+    private void checkUpdateInformation(RequestDto user, User userByUsername, TravelStatus status) {
+
+        switch (status) {
+            case ACTIVE_TRAVEL:
+                if (userByUsername.getNicOrPassport().getId() != user.getNicOrPassport())
+                    throw new AlreadyInTravelException("Already in a travel.");
+                if (userByUsername.getAddress() != user.getAddress())
+                    throw new AlreadyInTravelException("Already in a travel.");
+                if (userByUsername.getName() != user.getName())
+                    throw new AlreadyInTravelException("Already in a travel.");
+                if (userByUsername.getContact() != user.getContact())
+                    throw new AlreadyInTravelException("Already in a travel.");
+                break;
+            case BOOKING_TRAVEL:
+                if (userByUsername.getNicOrPassport().getId() != user.getNicOrPassport())
+                    throw new AlreadyInTravelException("Already in a travel.");
+                if (userByUsername.getName() != user.getName())
+                    throw new AlreadyInTravelException("Already in a travel.");
+                break;
+            default:
+                throw new RuntimeException("Unknown error. Username : " + user.getUsername());
+        }
+
     }
 
     @Override

@@ -5,6 +5,7 @@ import lk.ijse.travelservice.dto.ResponseTravelDto;
 import lk.ijse.travelservice.dto.embedded.*;
 import lk.ijse.travelservice.entity.Travel;
 import lk.ijse.travelservice.entity.embedded.*;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -20,13 +21,17 @@ public interface TravelMapper {
 
 //    List<Travel> toEntity(List<RequestTravelDto> dto);
 
+    @Mapping(source = "bookingDate", target = "bookingDate" , dateFormat = "yyyy-MM-dd HH:mm:ss Z")
     ResponseTravelDto toDto(Travel entity);
 
     @Mapping(target = "packageInfo.packageName", source = "packageInfo")
     Travel toEntity(RequestTravelDto dto);
 
+    @Mapping(source = "startDate", target = "startDate" , dateFormat = "yyyy-MM-dd HH:mm:ss Z")
+    @Mapping(source = "endDate", target = "endDate" , dateFormat = "yyyy-MM-dd HH:mm:ss Z")
     TravelDurationDto toDto(TravelDuration entity);
 
+    @InheritInverseConfiguration
     TravelDuration toEntity(TravelDurationDto dto);
 
     VehicleDetailsDto toDto(VehicleDetails entity);
@@ -49,8 +54,10 @@ public interface TravelMapper {
 
     PackageValueDetails toEntity(PackageValueDetailsDto dto);
 
+    @Mapping(source = "date", target = "date" , dateFormat = "yyyy-MM-dd HH:mm:ss Z")
     PaymentDetailsDto toDto(PaymentDetails entity);
 
+    @InheritInverseConfiguration
     PaymentDetails toEntity(PaymentDetailsDto dto);
 
     List<ResponseTravelDto> toResponseDto(List<Travel> all);

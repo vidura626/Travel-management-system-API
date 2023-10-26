@@ -1,5 +1,6 @@
 package lk.ijse.travelservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mongodb.lang.Nullable;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 @AllArgsConstructor
@@ -44,4 +46,6 @@ public class ResponseTravelDto implements Serializable {
     private PaymentDetailsDto paymentDetails;
     @Nullable
     private String remarks;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss Z", timezone = "Asia/Colombo")
+    private Date bookingDate;
 }

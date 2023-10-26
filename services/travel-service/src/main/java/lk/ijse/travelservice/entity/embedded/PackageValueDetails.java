@@ -21,7 +21,7 @@ public class PackageValueDetails implements Serializable {
     private double hotelDayFees;
     @Positive(message = "Hotel Cancellation fees should be positive")
     @Min(0)
-    private double hotelCancellationFee;
+    private double totalHotelCancellationFees;
     @Positive(message = "Hotel night fees should be positive")
     @Min(0)
     private double hotelNightFees;

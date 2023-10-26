@@ -17,4 +17,6 @@ public class HotelDetails {
     private long hotelId;
     @Min(value = 0, message = "Hotel Fee of hotel details should be positive")
     private double hotelFee;
+    @Min(value = 0, message = "Cancellation fee of hotel details should be positive")
+    private double hotelCancellationFee;
 }

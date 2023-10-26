@@ -44,4 +44,5 @@ public class RequestDto {
     private String locationName;
     @NotBlank(message = "Google map location cannot be blank")
     private String googleMapLocation;
+    private Boolean isPetsAllowed;
 }

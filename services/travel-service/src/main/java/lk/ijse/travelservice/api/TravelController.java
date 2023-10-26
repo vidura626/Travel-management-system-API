@@ -4,12 +4,14 @@ import jakarta.validation.Valid;
 import lk.ijse.travelservice.dto.RequestTravelDto;
 import lk.ijse.travelservice.dto.ResponseTravelDto;
 import lk.ijse.travelservice.service.TravelService;
+import lk.ijse.travelservice.util.constants.TravelStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/travels")
@@ -40,5 +42,9 @@ public class TravelController {
     @GetMapping(params = "packageId")
     public ResponseEntity<ResponseTravelDto> deleteTravelByPackageId(@RequestParam("packageId") String packageId) {
         return ResponseEntity.ok().body(travelService.deleteTravel(packageId));
+    }
+    @GetMapping(path = "hasActiveTravels")
+    public ResponseEntity<Map<TravelStatus, Boolean>> hasActiveTravels(@RequestParam("userId") String userId) {
+        return ResponseEntity.ok().body(travelService.hasActiveTravels(Long.parseLong(userId)));
     }
 }
