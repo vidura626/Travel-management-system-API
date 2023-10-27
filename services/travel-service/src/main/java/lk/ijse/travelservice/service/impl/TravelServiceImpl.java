@@ -5,6 +5,7 @@ import lk.ijse.travelservice.dto.RequestTravelDto;
 import lk.ijse.travelservice.dto.ResponseTravelDto;
 import lk.ijse.travelservice.dto.guide.Guide;
 import lk.ijse.travelservice.dto.hotel.Hotel;
+import lk.ijse.travelservice.dto.user.User;
 import lk.ijse.travelservice.dto.vehicle.Vehicle;
 import lk.ijse.travelservice.entity.Package;
 import lk.ijse.travelservice.entity.Travel;
@@ -54,7 +55,7 @@ public class TravelServiceImpl implements TravelService {
     @Override
     public String bookingTravel(RequestTravelDto requestTravelDto) {
         if (repository.findById(requestTravelDto.getPackageID()).isPresent()) {
-            throw new NotFoundException("Package already found, Package ID: " + requestTravelDto.getPackageID());
+            throw new NotFoundException("Booking already found, Package ID: " + requestTravelDto.getPackageID());
         }
         Travel travel = validateDetailsOfTravelDto(requestTravelDto);
         if (travel != null) {
@@ -68,7 +69,7 @@ public class TravelServiceImpl implements TravelService {
     public String updateBooking(RequestTravelDto requestTravelDto) {
         Optional<Travel> travelByIdOptional = repository.findById(requestTravelDto.getPackageID());
         if (travelByIdOptional.isEmpty()) {
-            throw new NotFoundException("Package not found");
+            throw new NotFoundException("Booking not found");
         } else {
 
             if (canModifyBookings(travelByIdOptional.get())) {
@@ -99,7 +100,7 @@ public class TravelServiceImpl implements TravelService {
     public ResponseTravelDto deleteTravel(String packageId) {
         Optional<Travel> byId = repository.findById(packageId);
         if (byId.isEmpty()) {
-            throw new NotFoundException("Package not found");
+            throw new NotFoundException("Booking not found");
         } else {
             if (canModifyBookings(byId.get())) {
                 repository.delete(byId.get());
@@ -148,8 +149,26 @@ public class TravelServiceImpl implements TravelService {
         validateVehicle(requestTravelDto, webFluxClient);
         validateHotelInfo(requestTravelDto, webFluxClient);
         validateGuideInfo(requestTravelDto, webFluxClient);
-
+        validateUserDetails(requestTravelDto, webFluxClient);
         return travelMapper.toEntity(requestTravelDto);
+    }
+
+    private User validateUserDetails(RequestTravelDto requestTravelDto, WebClient webFluxClient) {
+        if (requestTravelDto.getUserID() < 0)
+            throw new InvalidTravelDetailException("Given user Id not valid");
+        else {
+            if (requestTravelDto.getUserID() > 0) {
+                return webFluxClient.get().uri("lb://user-service/api/user/findUserByUserId", uriBuilder ->
+                                uriBuilder.queryParam("userId", requestTravelDto.getUserID()).build())
+                        .retrieve()
+                        .bodyToMono(User.class)
+                        .doOnError(throwable -> {
+                            throw new InvalidTravelDetailException("User not found, UserId : " + requestTravelDto.getUserID());
+                        })
+                        .block();
+            }
+        }
+        return null;
     }
 
     private Travel validateDetailsOfTravelDto(RequestTravelDto requestTravelDto, Travel travel) {

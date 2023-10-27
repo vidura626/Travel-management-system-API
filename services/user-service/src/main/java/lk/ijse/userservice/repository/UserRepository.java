@@ -7,8 +7,10 @@ import java.util.List;
 
 public interface UserRepository extends MongoRepository<User, String> {
     public User findUserByUsername(String username);
+
     public User findUserByEmail(String email);
 
     public List<User> findUsersByRole(String role);
 
+    User findUserByUserId(long userID);
 }

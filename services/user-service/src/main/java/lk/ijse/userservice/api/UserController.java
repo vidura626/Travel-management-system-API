@@ -35,17 +35,6 @@ public class UserController {
         return ResponseEntity.ok().body(null);
     }
 
-    @GetMapping(path = "/login",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDto login(@RequestBody RequestDto requestDto) {
-//        TODO: Validation
-
-//        TODO: Check Login
-
-//        TODO: Return
-        return null;
-    }
-
     @GetMapping(path = "/all",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ResponseDto>> getAllUsers() {
@@ -58,6 +47,11 @@ public class UserController {
         return ResponseEntity.ok().body(userService.findUserByUsername(username));
     }
 
+    @GetMapping(path = "findUserByUserId")
+    public ResponseEntity<ResponseDto> findUserByUserId(@RequestParam(name = "userId") String userId) {
+        return ResponseEntity.ok().body(userService.findUserByUserId(Long.parseLong(userId)));
+    }
+
     @DeleteMapping(path = "/delete/{username}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDto> deleteUser(@PathVariable(name = "username") String username) {
@@ -65,6 +59,16 @@ public class UserController {
             throw new NullPointerException("Username cannot be null");
         }
         userService.deleteUser(username);
+        return ResponseEntity.ok().body(null);
+    }
+
+    @DeleteMapping(path = "/delete",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDto> deleteUserByUserId(@RequestParam(name = "userId") String userId) {
+        if (userId == null) {
+            throw new NullPointerException("User Id cannot be null");
+        }
+        userService.deleteUser(Long.parseLong(userId));
         return ResponseEntity.ok().body(null);
     }
 }

@@ -48,6 +48,10 @@ public class TravelController {
         return ResponseEntity.ok().body(travelService.hasActiveTravels(Long.parseLong(userId)));
     }
 
+    @DeleteMapping(path = "delete/{travelId}")
+    public ResponseEntity<ResponseTravelDto> deleteTravel(@PathVariable("travelId") String travelId) {
+        return ResponseEntity.ok().body(travelService.deleteTravel(travelId));
+    }
     @DeleteMapping(path = "deleteByUserId/{userId}")
     public ResponseEntity<Boolean> deleteByUserId(@PathVariable("userId") String userId) {
         travelService.deleteByUserId(Long.parseLong(userId));

@@ -3,11 +3,13 @@ package lk.ijse.userservice.util.validator;
 import lk.ijse.userservice.exception.RequestDtoValidationException;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-@Component
-@Mapper
+@Mapper(componentModel = "spring")
 public class RequestDtoValidator {
+
     @Named("userId")
     public long validate(long userId) throws RequestDtoValidationException {
         if (userId > 0) {
@@ -21,11 +23,12 @@ public class RequestDtoValidator {
         if (password == null) {
             return null;
         }
-        if (password.matches("^(?=.*[A-Za-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")) {
-            return password;
-        } else {
-            throw new RequestDtoValidationException("Password should contain at least 8 characters that contains minimum of one uppercase, one lowercase, one number and one special character");
-        }
+        return password;
+//        if (password.matches("^(?=.*[A-Za-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")) {
+//            return password;
+//        } else {
+//            throw new RequestDtoValidationException("Password should contain at least 8 characters that contains minimum of one uppercase, one lowercase, one number and one special character");
+//        }
     }
 
     @Named("gender")

@@ -12,6 +12,7 @@ import lk.ijse.userservice.util.constants.Role;
 import lk.ijse.userservice.util.constants.TravelStatus;
 import lk.ijse.userservice.util.mappers.RequestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -25,19 +26,23 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RequestMapper requestMapper;
     private final WebClient.Builder webClient;
-
+    private PasswordEncoder passwordEncoder;
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RequestMapper requestMapper, WebClient.Builder webClient) {
+    public UserServiceImpl(UserRepository userRepository, RequestMapper requestMapper, WebClient.Builder webClient, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.requestMapper = requestMapper;
         this.webClient = webClient;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void registerUser(RequestDto requestDto) {
-        if (userRepository.findUserByUsername(requestDto.getUsername()) != null) {
+        if(requestDto.getPassword() == null){
+            throw new RuntimeException("Password cannot be null");
+        }else if (userRepository.findUserByUsername(requestDto.getUsername()) != null) {
             throw new AlreadyExistsException("Username already exists. Username : " + requestDto.getUsername());
         } else {
+            requestDto.setPassword(passwordEncoder.encode(requestDto.getPassword()));
             userRepository.save(requestMapper.requestDtoToUser(requestDto));
         }
     }
@@ -62,6 +67,8 @@ public class UserServiceImpl implements UserService {
 //                Only can update email and contact details within 48 hours after booking a package
                 if (requestUserUpdateDetails.getPassword() == null) {
                     requestUserUpdateDetails.setPassword(dbUser.getPassword());
+                }else {
+                    requestUserUpdateDetails.setPassword(passwordEncoder.encode(requestUserUpdateDetails.getPassword()));
                 }
                 userRepository.save(requestMapper.requestDtoToUser(requestUserUpdateDetails));
                 return requestUserUpdateDetails.getUserId();
@@ -159,5 +166,20 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(requestMapper::userToResponseDto)
                 .collect(toList());
+    }
+
+    @Override
+    public ResponseDto findUserByUserId(long userID) {
+        User user = userRepository.findUserByUserId(userID);
+        if (user == null) {
+            throw new NotFoundException("User not found. UserId : " + userID);
+        } else {
+            return requestMapper.userToResponseDto(user);
+        }
+    }
+
+    @Override
+    public void deleteUser(long userId) {
+        userRepository.deleteById(String.valueOf(userId));
     }
 }

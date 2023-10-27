@@ -22,4 +22,7 @@ public interface UserService {
 
     public List<ResponseDto> findUserByRole(Role role);
 
+    ResponseDto findUserByUserId(long userID);
+
+    void deleteUser(long userId);
 }
