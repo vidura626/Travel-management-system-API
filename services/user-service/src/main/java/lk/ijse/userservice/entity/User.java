@@ -10,8 +10,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -19,7 +24,7 @@ import java.util.Date;
 @Data
 @Builder
 @Document
-public class User {
+public class User implements UserDetails {
     @Id
     @Min(value = 1, message = "UserId cannot be less than 1")
     @Max(value = 9999999999L, message = "UserId cannot be greater than 9999999999")
@@ -54,4 +59,29 @@ public class User {
             regexp = "^(user|admin)$",
             flags = {Pattern.Flag.CASE_INSENSITIVE})
     private String role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

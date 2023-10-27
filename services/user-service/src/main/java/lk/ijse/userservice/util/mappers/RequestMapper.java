@@ -30,9 +30,12 @@ public interface RequestMapper {
     @Mapping(target = "gender", expression = "java(lk.ijse.userservice.util.constants.Gender.valueOf(requestDto.getGender().toUpperCase()))")
     User requestDtoToUser(RequestDto requestDto) throws RequestDtoValidationException;
 
+    @InheritInverseConfiguration
+    RequestDto usetoRequestDto(User user);
 
     @InheritInverseConfiguration
     ResponseDto requestDtoToUser(User user);
+
 
     default String multipartFileToByteArray(MultipartFile file) throws IOException {
         return Base64.getEncoder().encodeToString(file.getBytes());
