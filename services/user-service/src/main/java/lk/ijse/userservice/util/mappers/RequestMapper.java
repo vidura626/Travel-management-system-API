@@ -28,10 +28,9 @@ public interface RequestMapper {
     @Mapping(source = "frontImg", target = "nicOrPassport.frontImg")
     @Mapping(source = "backImg", target = "nicOrPassport.backImg")
     @Mapping(target = "gender", expression = "java(lk.ijse.userservice.util.constants.Gender.valueOf(requestDto.getGender().toUpperCase()))")
+    @Mapping(target = "role", expression = "java(lk.ijse.userservice.util.constants.Role.valueOf(\"ROLE_\" + requestDto.getRole().toUpperCase()))")
     User requestDtoToUser(RequestDto requestDto) throws RequestDtoValidationException;
 
-    @InheritInverseConfiguration
-    RequestDto usetoRequestDto(User user);
 
     @InheritInverseConfiguration
     ResponseDto requestDtoToUser(User user);

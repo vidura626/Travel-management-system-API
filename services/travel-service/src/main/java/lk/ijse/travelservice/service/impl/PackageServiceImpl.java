@@ -90,16 +90,15 @@ public class PackageServiceImpl implements PackageService {
     @Override
     public String updateExistingPackage(PackageDto packageInfo) {
 //        Validation
-        if (repository.findById(packageInfo.getPackageName()).isEmpty()) {
-            throw new NotFoundException("Package not found : " + packageInfo.getPackageName());
-        } else {
-            if (checkHotels(packageInfo) && checkVehicles(packageInfo)) {
-                Package packageEntity = mapper.toEntity(packageInfo);
-                repository.save(packageEntity);
-                return packageEntity.getPackageName();
-            }
-            return null;
-        }
+        return repository.findById(packageInfo.getPackageName()).map(aPackage -> {
+                    if (checkHotels(packageInfo) && checkVehicles(packageInfo)) {
+                        Package packageEntity = mapper.toEntity(packageInfo);
+                        repository.save(packageEntity);
+                        return packageEntity.getPackageName();
+                    }
+                    return null;
+                })
+                .orElseThrow(() -> new NotFoundException("Package not found : " + packageInfo.getPackageName()));
     }
 
     @Override

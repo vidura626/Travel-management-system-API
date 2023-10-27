@@ -19,7 +19,7 @@ public class RequestDto {
     private long userId;
     @NotBlank(message = "Name cannot be blank")
     @Pattern(message = "Name should contain only letters",
-            regexp = "^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)$")
+            regexp = "^([ \\u00c0-\\u01ffa-zA-Z'\\-])+$")
     private String name;
     @Pattern(message = "Gender should be male or female",
             regexp = "^(male|female)$", flags = Pattern.Flag.CASE_INSENSITIVE)
@@ -54,6 +54,6 @@ public class RequestDto {
             regexp = "^(?:7|0|(?:\\+94)|(?:94))[0-9]{9,10}$")
     private String contact;
     @Pattern(message = "Role should be user or admin",
-            regexp = "^(user|admin)$")
+            regexp = "^(user|admin)$", flags = Pattern.Flag.CASE_INSENSITIVE)
     private String role;
 }

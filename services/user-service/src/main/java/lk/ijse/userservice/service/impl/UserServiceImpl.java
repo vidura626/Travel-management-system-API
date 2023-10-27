@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final RequestMapper requestMapper;
     private final WebClient.Builder webClient;
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository, RequestMapper requestMapper, WebClient.Builder webClient, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -37,11 +38,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(RequestDto requestDto) {
-        if(requestDto.getPassword() == null){
+        if (requestDto.getPassword() == null)
             throw new RuntimeException("Password cannot be null");
-        }else if (userRepository.findUserByUsername(requestDto.getUsername()) != null) {
+        else if (userRepository.findUserByUsername(requestDto.getUsername()) != null)
             throw new AlreadyExistsException("Username already exists. Username : " + requestDto.getUsername());
-        } else {
+        else {
             requestDto.setPassword(passwordEncoder.encode(requestDto.getPassword()));
             userRepository.save(requestMapper.requestDtoToUser(requestDto));
         }
@@ -55,11 +56,12 @@ public class UserServiceImpl implements UserService {
         } else {
             WebClient webFluxClient = webClient.build();
 
-            Map hasActiveTravels = webFluxClient.get().uri("lb://travel-service/api/travels/hasActiveTravels")
+            Map hasActiveTravels = webFluxClient.get().uri("lb://travel-service/api/travels/hasActiveTravels",
+                            uriBuilder -> uriBuilder.queryParam("userId", requestUserUpdateDetails.getUserId()).build())
                     .retrieve()
                     .bodyToMono(Map.class)
                     .doOnError(throwable -> {
-                        throw new RuntimeException("Unknown error. Username : " + requestUserUpdateDetails.getUsername());
+                        throw new RuntimeException("Unknown error at webflux call with travel-service/api/travels/hasActiveTravels Username : " + requestUserUpdateDetails.getUsername());
                     })
                     .block();
 
@@ -67,7 +69,7 @@ public class UserServiceImpl implements UserService {
 //                Only can update email and contact details within 48 hours after booking a package
                 if (requestUserUpdateDetails.getPassword() == null) {
                     requestUserUpdateDetails.setPassword(dbUser.getPassword());
-                }else {
+                } else {
                     requestUserUpdateDetails.setPassword(passwordEncoder.encode(requestUserUpdateDetails.getPassword()));
                 }
                 userRepository.save(requestMapper.requestDtoToUser(requestUserUpdateDetails));

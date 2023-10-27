@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 import lk.ijse.userservice.entity.embedded.NICorPassport;
 import lk.ijse.userservice.util.constants.Gender;
+import lk.ijse.userservice.util.constants.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +32,7 @@ public class User implements UserDetails {
     private long userId;
     @NotBlank(message = "Name cannot be blank")
     @Pattern(message = "Name should contain only letters",
-            regexp = "^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)$")
+            regexp = "^([ \\u00c0-\\u01ffa-zA-Z'\\-])+$")
     private String name;
     private Gender gender;
     @NotNull(message = "Date of Birth cannot be null")
@@ -55,14 +56,13 @@ public class User implements UserDetails {
     @Pattern(message = "Contact should contain only numbers",
             regexp = "^(?:7|0|(?:\\+94)|(?:94))[0-9]{9,10}$")
     private String contact;
-    @Pattern(message = "Role should be user or admin",
-            regexp = "^(user|admin)$",
+    @Pattern(message = "Role should be role_user or role_admin",
+            regexp = "^(role_user|role_admin)$",
             flags = {Pattern.Flag.CASE_INSENSITIVE})
-    private String role;
-
+    private Role role;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

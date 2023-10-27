@@ -1,5 +1,5 @@
 package lk.ijse.userservice.util.constants;
 
 public enum Role {
-    ADMIN, USER
+    ROLE_ADMIN, ROLE_USER
 }

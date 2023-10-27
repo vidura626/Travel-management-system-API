@@ -3,9 +3,6 @@ package lk.ijse.userservice.util.validator;
 import lk.ijse.userservice.exception.RequestDtoValidationException;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
 @Mapper(componentModel = "spring")
 public class RequestDtoValidator {
