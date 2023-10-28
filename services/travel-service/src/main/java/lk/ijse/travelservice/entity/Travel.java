@@ -1,6 +1,5 @@
 package lk.ijse.travelservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mongodb.lang.Nullable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

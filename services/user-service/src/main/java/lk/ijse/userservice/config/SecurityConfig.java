@@ -43,7 +43,7 @@ public class SecurityConfig {
                         return configuration;
                     }
                 }))
-//                CSRF Configurations (CSRF Attacks can modify data in db)
+//                CSRF Configurations
                 .csrf(configurer -> {
                     configurer.csrfTokenRequestHandler(requestHandler)
                             .ignoringRequestMatchers("/api/user/register")
@@ -72,5 +72,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

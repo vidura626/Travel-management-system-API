@@ -2,6 +2,7 @@ package lk.ijse.userservice.filter;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -17,17 +18,16 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt = request.getHeader(SecurityConstants.JWT_HEADER);
-        if (null != jwt) {
+        if (null != jwt && jwt.startsWith("Bearer ")) {
+            jwt = jwt.substring("Bearer ".length());
             try {
-                SecretKey secretKey = Keys.hmacShaKeyFor
-                        (SecurityConstants.JWT_KEY.getBytes(StandardCharsets.UTF_8));
+                SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SecurityConstants.JWT_KEY));
 
                 Claims body = Jwts.parserBuilder()
                         .setSigningKey(secretKey)
