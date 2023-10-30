@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: my-application
+  cloud:
+    config:
+      uri: http://localhost:8090
+      server:
+        git:
+          uri: https://github.com/vidura626/Travel-management-system-API.git
+server:
+  port: 8090

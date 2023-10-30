@@ -23,7 +23,7 @@
         <module>services/travel-service</module>
         <module>api-gateway</module>
         <module>discovery-server</module>
-        <module>auth-service</module>
+        <module>config-service</module>
     </modules>
 
     <properties>
