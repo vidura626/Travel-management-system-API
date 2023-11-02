@@ -16,6 +16,7 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("api/hotel")
+@CrossOrigin
 public class HotelController {
     private final HotelService hotelService;
 

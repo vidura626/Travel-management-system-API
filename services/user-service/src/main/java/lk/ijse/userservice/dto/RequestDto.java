@@ -33,9 +33,9 @@ public class RequestDto {
     @Pattern(message = "NIC or Passport is present in invalid format",
             regexp = "^(?:[0-9]{9}[xXvV]|[0-9]{12}|[A-Z][0-9]{8})$")
     private String nicOrPassport;
-    @NotNull(message = "Profile Picture cannot be null or blank")
+    @NotNull(message = "nicOrPassport front cannot be null or blank")
     private MultipartFile frontImg;
-    @NotNull(message = "Profile Picture cannot be null or blank")
+    @NotNull(message = "nicOrPassport back cannot be null or blank")
     private MultipartFile backImg;
     private Date regDate;
     @Pattern(message = "Username should contain only letters and numbers",

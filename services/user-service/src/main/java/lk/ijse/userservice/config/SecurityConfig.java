@@ -34,11 +34,11 @@ public class SecurityConfig {
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration configuration = new CorsConfiguration();
-                        configuration.setAllowedOrigins(List.of("*"));
+                        configuration.setAllowedOrigins(List.of("http://127.0.0.1:5500/", "http://localhost:8080/"));
                         configuration.setAllowedMethods(List.of("*"));
+                        configuration.setAllowedHeaders(List.of("*"));
                         configuration.setMaxAge(3600L);
                         configuration.setAllowCredentials(true);
-                        configuration.setAllowedHeaders(List.of("*"));
                         configuration.setExposedHeaders(List.of("Authorization"));
                         return configuration;
                     }

@@ -12,7 +12,7 @@ spring:
         - id: login-service
           uri: lb://user-service
           predicates:
-            - Path=/user/**
+            - Path=/user/login
           filters:
             - AuthenticationFilter
         - id: vehicle-service
@@ -45,3 +45,11 @@ spring:
             - Path=/api/travels/**,/api/packages/**
           filters:
             - AuthenticationFilter
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
