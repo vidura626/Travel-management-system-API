@@ -50,7 +50,6 @@ public class VehicleServiceImpl implements VehicleService {
 //            For validation
             Vehicle vehicle1 = requestMapper.requestDtoToVehicle(vehicle);
             ResponseDto responseDto = requestMapper.requestDtoToUser(vehicle1);
-            responseDto.setAuto(true);
             vehicleRepository.save(vehicle1);
         }
     }

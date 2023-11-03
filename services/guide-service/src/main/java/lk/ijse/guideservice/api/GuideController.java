@@ -46,7 +46,7 @@ public class GuideController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDto> deleteGuide(@PathVariable(name = "guideId") String guideId) {
         if (guideId == null) {
-            throw new NullPointerException("Username cannot be null");
+            throw new NullPointerException("Guide cannot be null");
         }
         guideService.deleteGuide(Long.parseLong(guideId));
         return ResponseEntity.ok().body(null);
@@ -56,7 +56,7 @@ public class GuideController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDto> getGuideById(@PathVariable(name = "guideId") String guideId) {
         if (guideId == null) {
-            throw new NullPointerException("Username cannot be null");
+            throw new NullPointerException("Guide cannot be null");
         }
         return ResponseEntity.ok().body(guideService.findGuideByID(Long.parseLong(guideId)));
     }

@@ -4,7 +4,6 @@ import jakarta.validation.constraints.*;
 import lk.ijse.vehicleservice.entity.embedded.Driver;
 import lk.ijse.vehicleservice.entity.embedded.VehicleFee;
 import lk.ijse.vehicleservice.entity.embedded.VehicleImages;
-import lk.ijse.vehicleservice.util.constants.FuelType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +31,7 @@ public class Vehicle {
     @Min(value = 1, message = "fuel Usage cannot be less than 1")
     @Max(value = 100, message = "fuel Usage cannot be greater than 100")
     private int fuelUsage;
-    private FuelType fuelType;
+    private String fuelType;
     private Boolean isHybrid;
     private Boolean isAuto;
     @Min(value = 1, message = "Seat capacity cannot be less than 1")

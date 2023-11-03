@@ -40,7 +40,7 @@ public class TravelController {
     }
 
     @GetMapping(params = "packageId")
-    public ResponseEntity<ResponseTravelDto> deleteTravelByPackageId(@RequestParam("packageId") String packageId) {
+    public ResponseEntity<ResponseTravelDto> findTravelByPackageId(@RequestParam("packageId") String packageId) {
         return ResponseEntity.ok().body(travelService.findTravelByPackageId(packageId));
     }
     @GetMapping(path = "hasActiveTravels")

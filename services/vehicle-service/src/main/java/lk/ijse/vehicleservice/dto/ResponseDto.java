@@ -16,8 +16,8 @@ public class ResponseDto {
     private int fuelCapacity;
     private int fuelUsage;
     private String fuelType;
-    private boolean isHybrid;
-    private boolean isAuto;
+    private Boolean isHybrid;
+    private Boolean isAuto;
     private int seatCapacity;
     private String licenceFrontImg;
     private String licenceBackImg;

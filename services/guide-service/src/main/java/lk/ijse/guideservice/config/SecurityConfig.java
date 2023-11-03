@@ -1,9 +1,8 @@
-package lk.ijse.userservice.config;
+package lk.ijse.guideservice.config;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lk.ijse.userservice.filter.CsrfCookieFilter;
-import lk.ijse.userservice.filter.JWTTokenGeneratorFilter;
-import lk.ijse.userservice.filter.JWTTokenValidatorFilter;
+import lk.ijse.guideservice.filter.CsrfCookieFilter;
+import lk.ijse.guideservice.filter.JWTTokenValidatorFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,22 +45,17 @@ public class SecurityConfig {
 //                CSRF Configurations
                 .csrf(configurer -> {
                     configurer.csrfTokenRequestHandler(requestHandler)
-                            .ignoringRequestMatchers("/api/user/register")
                             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
                 })
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
-                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(req -> {
                     req
-                            .requestMatchers("/user/login").authenticated()
-                            .requestMatchers("/api/user/register").permitAll()
-                            .requestMatchers("/api/user/all").hasRole("ADMIN")
-                            .requestMatchers("/api/user/update",
-                                    "/api/user/{username}",
-                                    "/api/user/delete/{username}",
-                                    "/api/user/findUserByUserId",
-                                    "/api/user/delete").authenticated();
+                            .requestMatchers("/api/guide/register",
+                                    "/api/guide/update",
+                                    "/api/guide/delete/{guideId}").hasRole("ADMIN")
+                            .requestMatchers("/api/guide/all",
+                                    "/api/guide/{guideId}").permitAll();
                 });
         http.formLogin(withDefaults());
         http.httpBasic(withDefaults());

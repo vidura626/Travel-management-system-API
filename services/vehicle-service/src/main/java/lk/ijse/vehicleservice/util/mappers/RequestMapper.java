@@ -26,11 +26,10 @@ public interface RequestMapper {
     @Mapping(target = "images.rearImg", source = "rearImg")
     @Mapping(target = "fee.feeForDay", source = "feeForDay")
     @Mapping(target = "fee.feeFor1km", source = "feeFor1km")
-    @Mapping(target = "fuelType", expression = "java(lk.ijse.vehicleservice.util.constants.FuelType.valueOf(requestDto.getFuelType().toString().toUpperCase()))")
     Vehicle requestDtoToVehicle(RequestDto requestDto) throws RequestDtoValidationException;
 
 
-    @InheritInverseConfiguration
+   @InheritInverseConfiguration
     ResponseDto requestDtoToUser(Vehicle vehicle) throws RequestDtoValidationException;
 
     default String multipartFileToBase64String(MultipartFile file) throws IOException {
